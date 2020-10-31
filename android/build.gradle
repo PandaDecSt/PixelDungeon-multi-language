@@ -1,0 +1,21 @@
+android {
+    compileSdkVersion 19
+    
+    defaultConfig {
+        applicationId "com.kurtyu.pd"
+        minSdkVersion 14
+        targetSdkVersion 25
+    }
+    
+}
+
+dependencies {
+	compile project(":core")
+    compile "com.badlogicgames.gdx:gdx-backend-android:1.9.10"
+    compile "com.badlogicgames.gdx:gdx-controllers:1.9.10"
+    compile "com.badlogicgames.gdx:gdx-controllers-android:1.9.10"
+
+    compile 'com.google.android.gms:play-services-analytics:10.2.1'
+    compile "com.android.support:appcompat-v7:25.3.1"
+
+}

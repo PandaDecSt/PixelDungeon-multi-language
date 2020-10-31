@@ -1,0 +1,8 @@
+apply plugin: "java"
+
+dependencies {
+	compile "com.badlogicgames.gdx:gdx:1.9.10"
+    compile "com.badlogicgames.gdx:gdx-controllers:1.9.10"
+    //compile "org.json:json:20140107"
+//    compile 'com.badlogicgames.gdxpay:gdx-pay-client:0.10.3'
+}
