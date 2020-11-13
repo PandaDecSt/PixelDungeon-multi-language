@@ -6,6 +6,12 @@ import com.watabou.input.PDInputProcessor;
 
 public class AndroidInputProcessor extends PDInputProcessor
 {
+
+    @Override
+    public boolean scrolled(float p1, float p2) {
+        return false;
+    }
+
 	private Activity activity;
 
 	public AndroidInputProcessor(Activity activity)

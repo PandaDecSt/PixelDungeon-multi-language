@@ -92,8 +92,8 @@ public abstract class NoosaInputProcessor<T> implements InputProcessor {
 	}
 
 	@Override
-	public boolean scrolled(int amount) {
-		eventMouse.dispatch(new PDMouseEvent(amount));
+	public boolean scrolled(float x, float y) {
+		eventMouse.dispatch(new PDMouseEvent((int)y));
 		return true;
 	}
 	
