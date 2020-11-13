@@ -12,6 +12,6 @@ android {
 dependencies {
 	compile project(":core")
     compile fileTree(dir: 'src/main/jniLibs', includes: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
 
 }
