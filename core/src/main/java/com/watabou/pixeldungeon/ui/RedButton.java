@@ -36,7 +36,7 @@ public class RedButton extends Button {
 		super();
 		
 		text.text( label );
-		text.measure();
+		
 	}
 	
 	@Override
@@ -59,12 +59,26 @@ public class RedButton extends Button {
 		bg.y = y;
 		bg.size( width, height );
 		
-		text.x = x + (int)(width - text.width()) / 2;
-		text.y = y + (int)(height - text.baseLine()) / 2;
-		
-		if (icon != null) {
-			icon.x = x + text.x - icon.width() - 2;
-			icon.y = y + (height - icon.height()) / 2;
+        float componentWidth = 0;
+
+        if (icon != null) componentWidth += icon.width() + 2;
+
+        if (text != null && !text.text().equals("")){
+            componentWidth += text.width() + 2;
+
+            text.setPos(
+                x + (width() + componentWidth)/2f - text.width() - 1,
+                y + (height() - text.height()) / 2f
+            );
+            PixelScene.align(text);
+
+        }
+
+        if (icon != null) {
+
+            icon.x = x + (width() - componentWidth)/2f + 1;
+            icon.y = y + (height() - icon.height()) / 2f;
+            PixelScene.align(icon);
 		}
 	};
 	
@@ -86,7 +100,6 @@ public class RedButton extends Button {
 	
 	public void text( String value ) {
 		text.text( value );
-		text.measure();
 		layout();
 	}
 	
@@ -105,11 +118,25 @@ public class RedButton extends Button {
 		}
 	}
 	
-	public float reqWidth() {
-		return text.width() + 4;
-	}
-	
-	public float reqHeight() {
-		return text.baseLine() + 4;
+    public float reqWidth() {
+        float reqWidth = 0;
+        if (icon != null){
+            reqWidth += icon.width() + 2;
+        }
+        if (text != null && !text.text().equals("")){
+            reqWidth += text.width() + 2;
+        }
+        return reqWidth;
+    }
+
+    public float reqHeight() {
+        float reqHeight = 0;
+        if (icon != null){
+            reqHeight = Math.max(icon.height() + 4, reqHeight);
+        }
+        if (text != null && !text.text().equals("")){
+            reqHeight = Math.max(text.height() + 4, reqHeight);
+        }
+        return reqHeight;
 	}
 }

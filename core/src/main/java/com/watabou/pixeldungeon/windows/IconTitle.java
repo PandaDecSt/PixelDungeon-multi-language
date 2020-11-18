@@ -77,19 +77,19 @@ public class IconTitle extends Component {
 		imIcon.x = x;
 		imIcon.y = y;
 		
-		tfLabel.x = PixelScene.align( PixelScene.uiCamera, imIcon.x + imIcon.width() + GAP );
-		tfLabel.maxWidth = (int)(width - tfLabel.x);
-		tfLabel.measure();
-		tfLabel.y =  PixelScene.align( PixelScene.uiCamera,
+		tfLabel.setPosX(PixelScene.align( PixelScene.uiCamera, imIcon.x + imIcon.width() + GAP ));
+		tfLabel.maxWidth = (int)(width - tfLabel.getX());
+		
+		tfLabel.setPosY( PixelScene.align( PixelScene.uiCamera,
 			imIcon.height > tfLabel.height() ?
 				imIcon.y + (imIcon.height() - tfLabel.baseLine()) / 2 :
-				imIcon.y );
+				imIcon.y ));
 		
 		if (health.visible) {
-			health.setRect( tfLabel.x, Math.max( tfLabel.y + tfLabel.height(), imIcon.y + imIcon.height() - health.height() ), tfLabel.maxWidth, 0 );
+			health.setRect( tfLabel.getX(), Math.max( tfLabel.getY() + tfLabel.height(), imIcon.y + imIcon.height() - health.height() ), tfLabel.maxWidth, 0 );
 			height = health.bottom();
 		} else {
-			height = Math.max( imIcon.y + imIcon.height(), tfLabel.y + tfLabel.height() );
+			height = Math.max( imIcon.y + imIcon.height(), tfLabel.getY() + tfLabel.height() );
 		}
 	}
 	

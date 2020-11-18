@@ -26,6 +26,7 @@ import com.watabou.pixeldungeon.actors.hero.HeroSubClass;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.ui.HighlightedText;
 import com.watabou.pixeldungeon.utils.Utils;
+import net.whitegem.pixeldungeon.LanguageFactory;
 
 public class WndClass extends WndTabbed {
 	
@@ -113,20 +114,9 @@ public class WndClass extends WndTabbed {
 					pos += GAP;
 				}
 				
-				BitmapText dot = PixelScene.createText( DOT, 6 );
-				dot.x = MARGIN;
-				dot.y = pos;
-				if (dotWidth == 0) {
-					dot.measure();
-					dotWidth = dot.width();
-				}
-				add( dot );
-				
-				BitmapTextMultiline item = PixelScene.createMultiline( items[i], 6 );
-				item.x = dot.x + dotWidth;
-				item.y = pos;
-				item.maxWidth = (int)(WIDTH - MARGIN * 2 - dotWidth);
-				item.measure();
+				BitmapTextMultiline item = PixelScene.createMultiline( "-" + LanguageFactory.getTranslation(items[i]), 6 );
+                item.maxWidth((int)(WIDTH - MARGIN * 2 - dotWidth));
+				item.setPos(0, pos);
 				add( item );
 				
 				pos += item.height();
@@ -168,7 +158,7 @@ public class WndClass extends WndTabbed {
 			}
 
 			HighlightedText text = new HighlightedText( 6 );
-			text.text( message, WIDTH - MARGIN * 2 );
+			text.text( message, WIDTH - MARGIN * 4 );
 			text.setPos( MARGIN, MARGIN );
 			add( text );
 			

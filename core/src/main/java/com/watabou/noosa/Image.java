@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2012-2014  Oleg Dolya
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,13 +21,13 @@
 
 package com.watabou.noosa;
 
-import java.nio.FloatBuffer;
-
+import com.watabou.gltextures.SmartTexture;
+import com.watabou.gltextures.TextureCache;
+import com.watabou.glwrap.Quad;
+import com.watabou.glwrap.Vertexbuffer;
 import com.watabou.utils.RectF;
 
-import com.watabou.gltextures.TextureCache;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.glwrap.Quad;
+import java.nio.FloatBuffer;
 
 public class Image extends Visual {
 
@@ -35,6 +39,7 @@ public class Image extends Visual {
 	
 	protected float[] vertices;
 	protected FloatBuffer verticesBuffer;
+	protected Vertexbuffer buffer;
 	
 	protected boolean dirty;
 	
@@ -80,7 +85,7 @@ public class Image extends Visual {
 	}
 	
 	public RectF frame() {
-		return frame;
+		return new RectF( frame );
 	}
 
 	public void copy( Image other ) {
@@ -89,6 +94,8 @@ public class Image extends Visual {
 		
 		width = other.width;
 		height = other.height;
+
+		scale = other.scale;
 		
 		updateFrame();
 		updateVertices();
@@ -142,26 +149,45 @@ public class Image extends Visual {
 	
 	@Override
 	public void draw() {
+
+		if (texture == null || (!dirty && buffer == null))
+			return;
 		
 		super.draw();
 
-		NoosaScript script = NoosaScript.get();
+		if (dirty) {
+			verticesBuffer.position( 0 );
+			verticesBuffer.put( vertices );
+			if (buffer == null)
+				buffer = new Vertexbuffer( verticesBuffer );
+			else
+				buffer.updateVertices( verticesBuffer );
+			dirty = false;
+		}
+
+		NoosaScript script = script();
 		
 		texture.bind();
 		
 		script.camera( camera() );
 		
 		script.uModel.valueM4( matrix );
-		script.lighting( 
-			rm, gm, bm, am, 
+		script.lighting(
+			rm, gm, bm, am,
 			ra, ga, ba, aa );
+
+		script.drawQuad( buffer );
 		
-		if (dirty) {
-			verticesBuffer.position( 0 );
-			verticesBuffer.put( vertices );
-			dirty = false;
-		}
-		script.drawQuad( verticesBuffer );
-		
+	}
+
+	protected NoosaScript script(){
+		return NoosaScript.get();
+	}
+
+	@Override
+	public void destroy() {
+		super.destroy();
+		if (buffer != null)
+			buffer.delete();
 	}
 }

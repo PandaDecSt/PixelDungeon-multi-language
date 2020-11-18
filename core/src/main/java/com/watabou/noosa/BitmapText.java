@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2012-2014  Oleg Dolya
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,509 +21,253 @@
 
 package com.watabou.noosa;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.TextureData;
-import com.watabou.gdx.GdxTexture;
-import com.watabou.gltextures.SmartTexture;
-import com.watabou.gltextures.TextureCache;
-import com.watabou.glwrap.Matrix;
-import com.watabou.glwrap.Quad;
-import com.watabou.utils.RectF;
+import com.watabou.pixeldungeon.scenes.PixelScene;
+import com.watabou.noosa.Game;
+import com.watabou.noosa.RenderedText;
+import com.watabou.noosa.ui.Component;
 
+import java.util.ArrayList;
+import com.watabou.pixeldungeon.ui.Window;
 import net.whitegem.pixeldungeon.LanguageFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
+public class BitmapText extends Component {
 
-public class BitmapText extends Visual
-{
+	public int maxWidth = Integer.MAX_VALUE;
+	public int nLines;
 
-    public int realLength;
-    protected String text;
-    protected Font font;
-    protected float[] vertices = new float[16];
-    protected FloatBuffer quads;
-    protected boolean dirty = true;
+	private static final RenderedText SPACE = new RenderedText();
+	private static final RenderedText NEWLINE = new RenderedText();
+	
+	protected String text;
+	protected String[] tokens = null;
+	protected ArrayList<RenderedText> words = new ArrayList<>();
+	protected boolean multiline = false;
 
-    public BitmapText()
-    {
-        this("", null);
-    }
+	private int size;
+	private float zoom;
+	private int color = -1;
+	
+	private int hightlightColor = Window.TITLE_COLOR;
+	private boolean highlightingEnabled = true;
 
-    public BitmapText(Font font)
-    {
-        this("", font);
-    }
+	public static final int LEFT_ALIGN = 1;
+	public static final int CENTER_ALIGN = 2;
+	public static final int RIGHT_ALIGN = 3;
+	private int alignment = LEFT_ALIGN;
+	
+	public BitmapText(int size){
+		this.size = size;
+	}
 
-    public BitmapText(String text, Font font)
-    {
-        super(0, 0, 0, 0);
-        if (text != null)
-        {
-            this.text = LanguageFactory.getTranslation(text);
-        }
-        this.font = font;
-    }
+	public BitmapText(String text, int size){
+		this.size = size;
+		text(text);
+	}
 
-    @Override
-    public void destroy()
-    {
-        text = null;
-        font = null;
-        vertices = null;
-        quads = null;
-        super.destroy();
-    }
+	public void text(String text){
+		this.text = LanguageFactory.getTranslation(text);
 
-    @Override
-    protected void updateMatrix()
-    {
-        // "origin" field is ignored
-        Matrix.setIdentity(matrix);
-        Matrix.translate(matrix, x, y);
-        Matrix.scale(matrix, scale.x, scale.y);
-        Matrix.rotate(matrix, angle);
-    }
-
-    @Override
-    public void draw()
-    {
-        super.draw();
-
-        NoosaScript script = NoosaScript.get();
-
-        font.texture.bind();
-
-        if (dirty)
-        {
-            updateVertices();
-        }
-
-        script.camera(camera());
-
-        script.uModel.valueM4(matrix);
-        script.lighting(
-                rm, gm, bm, am,
-                ra, ga, ba, aa);
-        script.drawQuadSet(quads, realLength);
-
-    }
-
-    protected void updateVertices()
-    {
-
-        width = 0;
-        height = 0;
-
-        if (text == null)
-        {
-            text = "";
-        }
-
-        quads = Quad.createSet(text.length());
-        realLength = 0;
-
-        int length = text.length();
-        for (int i = 0; i < length; i++)
-        {
-            RectF rect = font.get(text.charAt(i));
-
-            if (rect == null)
-            {
-                continue;
-            }
-
-            float w = font.width(rect);
-            float h = font.height(rect);
-
-            vertices[0] = width;
-            vertices[1] = 0;
-
-            vertices[2] = rect.left;
-            vertices[3] = rect.top;
-
-            vertices[4] = width + w;
-            vertices[5] = 0;
-
-            vertices[6] = rect.right;
-            vertices[7] = rect.top;
-
-            vertices[8] = width + w;
-            vertices[9] = h;
-
-            vertices[10] = rect.right;
-            vertices[11] = rect.bottom;
-
-            vertices[12] = width;
-            vertices[13] = h;
-
-            vertices[14] = rect.left;
-            vertices[15] = rect.bottom;
-
-            quads.put(vertices);
-            realLength++;
-
-            width += w + font.tracking;
-            if (h > height)
-            {
-                height = h;
-            }
-        }
-
-        if (length > 0)
-        {
-            width -= font.tracking;
-        }
-
-        dirty = false;
-
-    }
-
-    public void measure()
-    {
-
-        width = 0;
-        height = 0;
-
-        if (text == null)
-        {
-            text = "";
-        }
-
-        int length = text.length();
-        for (int i = 0; i < length; i++)
-        {
-            RectF rect = font.get(text.charAt(i));
-            if (rect == null)
-            {
-                continue;
-            }
-
-            float w = font.width(rect);
-            float h = font.height(rect);
-
-            width += w + font.tracking;
-            if (h > height)
-            {
-                height = h;
-            }
-        }
-
-        if (length > 0)
-        {
-            width -= font.tracking;
-        }
-    }
-
-    public float baseLine()
-    {
-        return font.baseLine * scale.y;
-    }
-
-    public Font font()
-    {
-        return font;
-    }
-
-    public void font(Font value)
-    {
-        font = value;
-    }
-
-    public String text()
-    {
-        return text;
-    }
-
+		if (LanguageFactory.getTranslation(text) != null && !LanguageFactory.getTranslation(text).equals("")) {
+			
+			tokens = Game.platform.splitforTextBlock(LanguageFactory.getTranslation(text), multiline);
+			
+			build();
+		}
+	}
+    
     public void text(String str1, String str2)
     {
         text = str1 + " " + LanguageFactory.getTranslation(str2);
-        dirty = true;
+        if (LanguageFactory.getTranslation(str2) != null && !LanguageFactory.getTranslation(str2).equals("")) {
+			
+			tokens = Game.platform.splitforTextBlock(LanguageFactory.getTranslation(str2), multiline);
+			
+			build();
+		}
+        
     }
 
-    public void text(String str)
-    {
-        if (str != null)
-        {
-            text = LanguageFactory.getTranslation(str);
-        }
-        dirty = true;
-    }
+	public void text(String text, int maxWidth){
+		this.maxWidth = maxWidth;
+		multiline = true;
+		text(text);
+	}
 
-    public static class Font extends TextureFilm
-    {
+	public String text(){
+		return text;
+	}
 
-        public static final String LATIN_UPPER =
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	public void maxWidth(int maxWidth){
+		if (this.maxWidth != maxWidth){
+			this.maxWidth = maxWidth;
+			multiline = true;
+			text(text);
+		}
+	}
 
-        public static final String LATIN_FULL =
-                " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u007F";
+	public int maxWidth(){
+		return maxWidth;
+	}
 
-        public SmartTexture texture;
+	private synchronized void build(){
+		if (tokens == null) return;
+		
+		clear();
+		words = new ArrayList<>();
+		boolean highlighting = false;
+		for (String str : tokens){
+			
+			if (str.equals("_") && highlightingEnabled){
+				highlighting = !highlighting;
+			} else if (str.equals("\n")){
+				words.add(NEWLINE);
+			} else if (str.equals(" ")){
+				words.add(SPACE);
+			} else {
+				RenderedText word = new RenderedText(str, size);
+				
+				if (highlighting) word.hardlight(hightlightColor);
+				else if (color != -1) word.hardlight(color);
+				word.scale.set(zoom);
+				
+				words.add(word);
+				add(word);
+				
+				if (height < word.height()) height = word.height();
+			}
+		}
+		layout();
+	}
 
-        public float tracking = 0;
-        public float baseLine;
+	public synchronized void zoom(float zoom){
+		this.zoom = zoom;
+		for (RenderedText word : words) {
+			if (word != null) word.scale.set(zoom);
+		}
+		layout();
+	}
 
-        public boolean autoUppercase = false;
+	public synchronized void hardlight(int color){
+		this.color = color;
+		for (RenderedText word : words) {
+			if (word != null) word.hardlight( color );
+		}
+	}
+	
+	public synchronized void resetColor(){
+		this.color = -1;
+		for (RenderedText word : words) {
+			if (word != null) word.resetColor();
+		}
+	}
+	
+	public synchronized void alpha(float value){
+		for (RenderedText word : words) {
+			if (word != null) word.alpha( value );
+		}
+	}
+	
+	public synchronized void setHightlighting(boolean enabled){
+		setHightlighting(enabled, Window.TITLE_COLOR);
+	}
+	
+	public synchronized void setHightlighting(boolean enabled, int color){
+		if (enabled != highlightingEnabled || color != hightlightColor) {
+			hightlightColor = color;
+			highlightingEnabled = enabled;
+			build();
+		}
+	}
 
-        public float lineHeight;
+	public synchronized void invert(){
+		if (words != null) {
+			for (RenderedText word : words) {
+				if (word != null) {
+					word.ra = 0.77f;
+					word.ga = 0.73f;
+					word.ba = 0.62f;
+					word.rm = -0.77f;
+					word.gm = -0.73f;
+					word.bm = -0.62f;
+				}
+			}
+		}
+	}
 
-        protected Font(SmartTexture tx)
-        {
-            super(tx);
+	public synchronized void align(int align){
+		alignment = align;
+		layout();
+	}
 
-            texture = tx;
-        }
+	@Override
+	protected synchronized void layout() {
+		super.layout();
+		float x = this.x;
+		float y = this.y;
+		float height = 0;
+		nLines = 1;
 
-        public Font(SmartTexture tx, int width, String chars)
-        {
-            this(tx, width, tx.height, chars);
-        }
+		ArrayList<ArrayList<RenderedText>> lines = new ArrayList<>();
+		ArrayList<RenderedText> curLine = new ArrayList<>();
+		lines.add(curLine);
 
-        public Font(SmartTexture tx, int width, int height, String chars)
-        {
-            super(tx);
+		width = 0;
+		for (RenderedText word : words){
+			if (word == SPACE){
+				x += 1.5f;
+			} else if (word == NEWLINE) {
+				//newline
+				y += height+2f;
+				x = this.x;
+				nLines++;
+				curLine = new ArrayList<>();
+				lines.add(curLine);
+			} else {
+				if (word.height() > height) height = word.height();
 
-            texture = tx;
+				if ((x - this.x) + word.width() > maxWidth && !curLine.isEmpty()){
+					y += height+2f;
+					x = this.x;
+					nLines++;
+					curLine = new ArrayList<>();
+					lines.add(curLine);
+				}
 
-            autoUppercase = chars.equals(LATIN_UPPER);
+				word.x = x;
+				word.y = y;
+				PixelScene.align(word);
+				x += word.width();
+				curLine.add(word);
 
-            int length = chars.length();
+				if ((x - this.x) > width) width = (x - this.x);
+				
+				//TODO spacing currently doesn't factor in halfwidth and fullwidth characters
+				//(e.g. Ideographic full stop)
+				x -= 0.5f;
 
-            float uw = (float) width / tx.width;
-            float vh = (float) height / tx.height;
+			}
+		}
+		this.height = (y - this.y) + height;
 
-            float left = 0;
-            float top = 0;
-            float bottom = vh;
-
-            for (int i = 0; i < length; i++)
-            {
-                RectF rect = new RectF(left, top, left += uw, bottom);
-                add(chars.charAt(i), rect);
-                if (left >= 1)
-                {
-                    left = 0;
-                    top = bottom;
-                    bottom += vh;
-                }
-            }
-
-            lineHeight = baseLine = height;
-        }
-
-        public static Font colorMarked(GdxTexture bmp, int color, String chars)
-        {
-            Font font = new Font(TextureCache.get(bmp));
-            font.splitBy(bmp, bmp.getHeight(), color, chars);
-            return font;
-        }
-
-        public static Font colorMarked(GdxTexture bmp, int height, int color, String chars)
-        {
-            Font font = new Font(TextureCache.get(bmp));
-            font.splitBy(bmp, height, color, chars);
-            return font;
-        }
-
-        public static Font colorMarked(GdxTexture bmp, int color, String chars, String fntFile, int scale)
-        {
-            Font font = new Font(TextureCache.get(bmp));
-            font.splitBy(bmp, bmp.getHeight(), color, chars, fntFile, scale);
-            return font;
-        }
-
-        public static Font colorMarked(GdxTexture bmp, int height, int color, String chars, String fntFile, int scale)
-        {
-            Font font = new Font(TextureCache.get(bmp));
-            font.splitBy(bmp, height, color, chars, fntFile, scale);
-            return font;
-        }
-
-        private ArrayList<FntFileChar> processFntFile(String fntFile, int scale)
-        {
-            ArrayList<FntFileChar> chars = new ArrayList<FntFileChar>();
-
-            FileHandle file = Gdx.files.internal(fntFile);
-            BufferedReader reader = new BufferedReader(file.reader());
-            ArrayList<String> lines = new ArrayList<String>();
-            try
-            {
-                String line = reader.readLine();
-                while (line != null)
-                {
-                    if (!line.trim().equals(""))
-                    {
-                        lines.add(line.trim());
-                    }
-                    line = reader.readLine();
-                }
-                reader.close();
-            }
-            catch (IOException ioe)
-            {
-            }
-            for (String line : lines)
-            {
-                String[] objs = line.split("\\s+");
-                String id = objs[1].split("=")[1];
-                String x = objs[2].split("=")[1];
-                String y = objs[3].split("=")[1];
-                String w = objs[4].split("=")[1];
-                String h = objs[5].split("=")[1];
-                String xo = objs[6].split("=")[1];
-                String yo = objs[7].split("=")[1];
-                int idi = Integer.parseInt(id);
-                int xi = Integer.parseInt(x);
-                int yi = Integer.parseInt(y);
-                int wi = Integer.parseInt(w);
-                int hi = Integer.parseInt(h);
-                int xoi = Integer.parseInt(xo);
-                int yoi = Integer.parseInt(yo);
-                char idc = (char) idi;
-//				System.out.print(Character.toString(idc));
-                FntFileChar ffc = new FntFileChar(idc, xi * scale, yi * scale, wi * scale, hi * scale, xoi * scale, yoi * scale);
-                chars.add(ffc);
-            }
-            return chars;
-        }
-
-        protected void splitBy(GdxTexture bitmap, int height, int color, String chars, String fntFile, int scale)
-        {
-            autoUppercase = false;
-
-            ArrayList<FntFileChar> realChars = processFntFile(fntFile, scale);
-
-            int width = bitmap.getWidth();
-            int length = realChars.size();
-
-            TextureData td = bitmap.getTextureData();
-            if (!td.isPrepared())
-            {
-                td.prepare();
-            }
-            final Pixmap pixmap = td.consumePixmap();
-
-            for (int i = 0; i < length; i++)
-            {
-                FntFileChar ch = realChars.get(i);
-                if (ch.c == ' ')
-                {
-                    add(ch.c, new RectF(1 - (float) ch.height / 2 / width, 1 - (float) ch.height / height, 1, 1));
-                    // add('\u007F', new RectF(1 - (float)ch.height / 2 / width, 1 - (float)ch.height / height, 1, 1));
-                    // in case no such in font
-                }
-                else
-                {
-                    add(ch.c, new RectF((float) ch.x / width, (float) ch.y / height, (float) (ch.x + ch.width) / width, (float) (ch.y + ch.height) / height));
-                }
-            }
-            pixmap.dispose();
-
-            lineHeight = baseLine = height(frames.get(realChars.get(0).c));
-        }
-
-        protected void splitBy(GdxTexture bitmap, int height, int color, String chars)
-        {
-
-            autoUppercase = chars.equals(LATIN_UPPER);
-            int length = chars.length();
-
-            int width = bitmap.getWidth();
-            float vHeight = (float) height / bitmap.getHeight();
-
-            int pos;
-
-
-            TextureData td = bitmap.getTextureData();
-            if (!td.isPrepared())
-            {
-                td.prepare();
-            }
-            final Pixmap pixmap = td.consumePixmap();
-            spaceMeasuring:
-            for (pos = 0; pos < width; pos++)
-            {
-                for (int j = 0; j < height; j++)
-                {
-                    if (colorNotMatch(pixmap, pos, j, color)) break spaceMeasuring;
-                }
-            }
-            add(' ', new RectF(0, 0, (float) pos / width, vHeight));
-
-            for (int i = 0; i < length; i++)
-            {
-
-                char ch = chars.charAt(i);
-                if (ch == ' ')
-                {
-                    continue;
-                }
-                else
-                {
-
-                    boolean found;
-                    int separator = pos;
-
-                    do
-                    {
-                        if (++separator >= width)
-                        {
-                            break;
-                        }
-                        found = true;
-                        for (int j = 0; j < height; j++)
-                        {
-                            if (colorNotMatch(pixmap, separator, j, color))
-                            {
-                                found = false;
-                                break;
-                            }
-                        }
-                    } while (!found);
-                    add(ch, new RectF((float) pos / width, 0, (float) separator / width, vHeight));
-                    pos = separator + 1;
-                }
-            }
-            pixmap.dispose();
-
-            lineHeight = baseLine = height(frames.get(chars.charAt(0)));
-        }
-
-        private boolean colorNotMatch(Pixmap pixmap, int x, int y, int color)
-        {
-            int pixel = pixmap.getPixel(x, y);
-            if ((pixel & 0xFF) == 0)
-            {
-                return color != 0;
-            }
-            return pixel != color;
-        }
-
-        public RectF get(char ch)
-        {
-            return super.get(autoUppercase ? Character.toUpperCase(ch) : ch);
-        }
-
-        private class FntFileChar
-        {
-            protected char c;
-            protected int x, y, width, height, x_offset, y_offset;
-
-            public FntFileChar(char c, int x, int y, int width, int height, int x_offset, int y_offset)
-            {
-                this.c = c;
-                this.x = x;
-                this.y = y;
-                this.width = width;
-                this.height = height;
-                this.x_offset = x_offset;
-                this.y_offset = y_offset;
-            }
-        }
+		if (alignment != LEFT_ALIGN){
+			for (ArrayList<RenderedText> line : lines){
+				if (line.size() == 0) continue;
+				float lineWidth = line.get(line.size()-1).width() + line.get(line.size()-1).x - this.x;
+				if (alignment == CENTER_ALIGN){
+					for (RenderedText text : line){
+						text.x += (width() - lineWidth)/2f;
+						PixelScene.align(text);
+					}
+				} else if (alignment == RIGHT_ALIGN) {
+					for (RenderedText text : line){
+						text.x += width() - lineWidth;
+						PixelScene.align(text);
+					}
+				}
+			}
+		}
+	}
+    public float baseLine(){
+        return height();
     }
 }

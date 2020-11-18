@@ -20,6 +20,7 @@ package com.watabou.noosa;
 import com.watabou.input.NoosaInputProcessor;
 import com.watabou.utils.Signal;
 import com.watabou.input.GameAction;
+import com.watabou.noosa.ui.Component;
 
 public class TouchArea<T> extends Visual implements Signal.Listener<NoosaInputProcessor.Touch> {
 	
@@ -75,6 +76,13 @@ public class TouchArea<T> extends Visual implements Signal.Listener<NoosaInputPr
 		this.target = target;
 
 		setupListeners();
+	}
+    
+    public TouchArea( Component Component ) {
+        super( Component.getX(), Component.getY(), Component.width(), Component.height() );
+        this.target = this;
+
+        setupListeners();
 	}
 
 	public TouchArea( float x, float y, float width, float height ) {

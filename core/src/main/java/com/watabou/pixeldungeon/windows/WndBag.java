@@ -108,9 +108,12 @@ public class WndBag extends WndTabbed {
 		
 		BitmapText txtTitle = PixelScene.createText( title != null ? title : Utils.capitalize( bag.name() ), 9 );
 		txtTitle.hardlight( TITLE_COLOR );
-		txtTitle.measure();
-		txtTitle.x = (int)(slotsWidth - txtTitle.width()) / 2;
-		txtTitle.y = (int)(TITLE_HEIGHT - txtTitle.height()) / 2;
+		
+		txtTitle.setPos(
+            1,
+            (TITLE_HEIGHT - txtTitle.height()) / 2f - 1
+        );
+		PixelScene.align(txtTitle);
 		add( txtTitle );
 		
 		placeItems( bag );

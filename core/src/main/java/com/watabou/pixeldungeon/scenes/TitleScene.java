@@ -124,9 +124,7 @@ public class TitleScene extends PixelScene
         BitmapText version = createText(6);
         add(version);
         version.text("ver 1.0.9");
-        version.measure();
-        version.x = w - version.width() - 5;
-        version.y = h - version.height();
+        version.setPos(w - version.width() - 5, h - version.height());
 
         PrefsButton btnPrefs = new PrefsButton();
         btnPrefs.setPos(0, 0);
@@ -209,7 +207,6 @@ public class TitleScene extends PixelScene
 
             image.frame(image.texture.uvRect(index * IMAGE_SIZE, 0, (index + 1) * IMAGE_SIZE, IMAGE_SIZE));
             this.label.text(text);
-            this.label.measure();
 
             setSize(SIZE, SIZE);
         }
@@ -234,8 +231,7 @@ public class TitleScene extends PixelScene
             image.x = align(x + (width - image.width()) / 2);
             image.y = align(y);
 
-            label.x = align(x + (width - label.width()) / 2);
-            label.y = align(image.y + image.height() + 2);
+            label.setPos(align(x + (width - label.width()) / 2), align(image.y + image.height() + 2));
         }
 
         @Override

@@ -84,13 +84,13 @@ public class GameLog extends Component implements Signal.Listener<String> {
 			{
 				lastEntry.text( lastMessage, text );
 			}
-			lastEntry.measure();
+			
 
 		} else {
 
 			lastEntry = PixelScene.createMultiline( text, 6 );
 			lastEntry.maxWidth = (int) width;
-			lastEntry.measure();
+			
 			lastEntry.hardlight( color );
 			lastColor = color;
 			add( lastEntry );
@@ -109,9 +109,8 @@ public class GameLog extends Component implements Signal.Listener<String> {
 		float pos = y;
 		for (int i=length-1; i >= 0; i--) {
 			BitmapTextMultiline entry = (BitmapTextMultiline)members.get( i );
-			entry.x = x;
-			entry.y = pos - entry.height();
-			pos -= entry.height();
+			entry.setPos(x, pos-entry.height());
+			pos -= entry.height()+2;
 		}
 	}
 

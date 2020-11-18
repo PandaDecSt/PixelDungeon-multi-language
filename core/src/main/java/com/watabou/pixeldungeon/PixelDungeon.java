@@ -18,24 +18,18 @@
 package com.watabou.pixeldungeon;
 
 import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.pay.Offer;
-//import com.badlogic.gdx.pay.OfferType;
-//import com.badlogic.gdx.pay.PurchaseManagerConfig;
-//import com.badlogic.gdx.pay.PurchaseObserver;
-//import com.badlogic.gdx.pay.PurchaseSystem;
-//import com.badlogic.gdx.pay.Transaction;
-//import com.badlogic.gdx.utils.GdxRuntimeException;
-//import com.kurtyu.IabInterface;
+import com.badlogic.gdx.files.FileHandle;
 import com.watabou.input.GameAction;
 import com.watabou.noosa.Game;
+import com.watabou.noosa.SmartFontGenerator;
 import com.watabou.noosa.audio.Music;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import com.watabou.pixeldungeon.scenes.PixelScene;
 import com.watabou.pixeldungeon.scenes.TitleScene;
 import com.watabou.utils.PDPlatformSupport;
-
 import net.whitegem.pixeldungeon.LanguageUtil;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class PixelDungeon extends Game
 {
@@ -47,6 +41,13 @@ public class PixelDungeon extends Game
         // In App Purchase
 //        iab = iabInterface;
 
+//		//Generate font
+//		SmartFontGenerator fontGen = new SmartFontGenerator();
+//		FileHandle exoFile = Gdx.files.internal("classic.ttf");
+//		BitmapFont fontSmall = fontGen.createFont(exoFile, "exo-small", 12);
+//		BitmapFont fontMedium = fontGen.createFont(exoFile, "exo-medium", 20);
+//		BitmapFont fontLarge = fontGen.createFont(exoFile, "exo-large", 45);
+//
         Game.version = platformSupport.getVersion();
 
         com.watabou.utils.Bundle.addAlias(

@@ -60,7 +60,7 @@ public class AmuletScene extends PixelScene {
 		if (!noText) {
 			text = createMultiline( TXT, 8 );
 			text.maxWidth = WIDTH;
-			text.measure();
+			
 			add( text );
 		}
 		
@@ -103,10 +103,9 @@ public class AmuletScene extends PixelScene {
 			amulet.x = align( (Camera.main.width - amulet.width) / 2 );
 			amulet.y = align( (Camera.main.height - height) / 2 );
 			
-			text.x =  align( (Camera.main.width - text.width()) / 2 );
-			text.y = amulet.y + amulet.height + LARGE_GAP;
+			text.setPos( align( (Camera.main.width - text.width()) / 2 ), amulet.y + amulet.height + LARGE_GAP);
 			
-			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, text.y + text.height() + LARGE_GAP );
+			btnExit.setPos( (Camera.main.width - btnExit.width()) / 2, text.getY() + text.height() + LARGE_GAP );
 			btnStay.setPos( btnExit.left(), btnExit.bottom() + SMALL_GAP );
 		}
 

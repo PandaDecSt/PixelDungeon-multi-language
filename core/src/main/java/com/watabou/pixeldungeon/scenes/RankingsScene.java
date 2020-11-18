@@ -84,9 +84,8 @@ public class RankingsScene extends PixelScene {
 			
 			BitmapText title = PixelScene.createText( TXT_TITLE, 9 );
 			title.hardlight( Window.TITLE_COLOR );
-			title.measure();
-			title.x = align( (w - title.width()) / 2 );
-			title.y = align( top - title.height() - GAP );
+			
+			title.setPos(align( (w - title.width()) / 2 ), align( top - title.height() - GAP ));
 			add( title );
 			
 			int pos = 0;
@@ -102,35 +101,35 @@ public class RankingsScene extends PixelScene {
 			if (Rankings.INSTANCE.totalNumber >= Rankings.TABLE_SIZE) {
 				BitmapText label = PixelScene.createText( TXT_TOTAL, 8 );
 				label.hardlight( DEFAULT_COLOR );
-				label.measure();
+				
 				add( label );
 				
 				BitmapText won = PixelScene.createText( Integer.toString( Rankings.INSTANCE.wonNumber ), 8 );
 				won.hardlight( Window.TITLE_COLOR );
-				won.measure();
+				
 				add( won );
 				
 				BitmapText total = PixelScene.createText( "/" + Rankings.INSTANCE.totalNumber, 8 );
 				total.hardlight( DEFAULT_COLOR );
-				total.measure();
-				total.x = align( (w - total.width()) / 2 );
-				total.y = align( top + pos * rowHeight + GAP );
+				
+				total.setPos(align( (w - total.width()) / 2 ), align( top + pos * rowHeight + GAP ));
 				add( total );
 				
 				float tw = label.width() + won.width() + total.width();
-				label.x = align( (w - tw) / 2 );
-				won.x = label.x + label.width();
-				total.x = won.x + won.width();
-				label.y = won.y = total.y = align( top + pos * rowHeight + GAP );
+				label.setPosX(align( (w - tw) / 2 ));
+				won.setPosX( label.getX() + label.width());
+				total.setPosX( won.getX()+ won.width());
+				label.setPosY(align( top + pos * rowHeight + GAP ));
+                won.setPosY(label.getY());
+                total.setPosY(label.getY());
 			}
 			
 		} else {
 			
 			BitmapText title = PixelScene.createText( TXT_NO_GAMES, 8 );
 			title.hardlight( DEFAULT_COLOR );
-			title.measure();
-			title.x = align( (w - title.width()) / 2 );
-			title.y = align( (h - title.height()) / 2 );
+			
+			title.setPos(align( (w - title.width()) / 2 ), align( (h - title.height()) / 2 ));
 			add( title );
 			
 		}
@@ -177,11 +176,11 @@ public class RankingsScene extends PixelScene {
 			}
 			
 			position.text( Integer.toString( pos+1 ) );
-			position.measure();
+			
 
 			Gdx.app.log("DEBUG","rec.info  = "+rec.info );
 			desc.text( rec.info );
-			desc.measure();
+			
 			
 			if (rec.win) {
 				shield.view( ItemSpriteSheet.AMULET, null );
@@ -222,8 +221,7 @@ public class RankingsScene extends PixelScene {
 			shield.x = x;
 			shield.y = y + (height - shield.height) / 2;
 			
-			position.x = align( shield.x + (shield.width - position.width()) / 2 );
-			position.y = align( shield.y + (shield.height - position.height()) / 2 + 1 );
+			position.setPos( align( shield.x + (shield.width - position.width()) / 2 ), align( shield.y + (shield.height - position.height()) / 2 + 1 ));
 			
 			if (flare != null) {
 				flare.point( shield.center() );
@@ -232,10 +230,10 @@ public class RankingsScene extends PixelScene {
 			classIcon.x = align( x + width - classIcon.width );
 			classIcon.y = shield.y;
 			
-			desc.x = shield.x + shield.width + GAP;
-			desc.maxWidth = (int)(classIcon.x - desc.x);
-			desc.measure();
-			desc.y = position.y + position.baseLine() - desc.baseLine();
+			desc.setPosX(shield.x + shield.width + GAP);
+			desc.maxWidth = (int)(classIcon.x - desc.getX());
+			
+			desc.setPosY( position.getY() + position.baseLine() - desc.baseLine());
 		}
 		
 		@Override

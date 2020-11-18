@@ -67,7 +67,7 @@ public class WndCatalogus extends WndTabbed {
 		
 		txtTitle = PixelScene.createText( TXT_TITLE, 9 );
 		txtTitle.hardlight( Window.TITLE_COLOR );
-		txtTitle.measure();
+		
 		add( txtTitle );
 		
 		list = new ScrollPane( new Component() ) {
@@ -112,8 +112,8 @@ public class WndCatalogus extends WndTabbed {
 	private void updateList() {
 		
 		txtTitle.text( Utils.format( TXT_TITLE, showPotions ? TXT_POTIONS : TXT_SCROLLS ) );
-		txtTitle.measure();
-		txtTitle.x = PixelScene.align( PixelScene.uiCamera, (width - txtTitle.width()) / 2 );
+		
+		txtTitle.setPosX( PixelScene.align( PixelScene.uiCamera, (width - txtTitle.width()) / 2 ));
 		
 		items.clear();
 		
@@ -183,8 +183,7 @@ public class WndCatalogus extends WndTabbed {
 		protected void layout() {
 			sprite.y = PixelScene.align( y + (height - sprite.height) / 2 );
 			
-			label.x = sprite.x + sprite.width;
-			label.y = PixelScene.align( y + (height - label.baseLine()) / 2 );
+			label.setPos( sprite.x + sprite.width, PixelScene.align( y + (height - label.baseLine()) / 2 ));
 		}
 		
 		public boolean onClick( float x, float y ) {

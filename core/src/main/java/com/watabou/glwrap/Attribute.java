@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2012-2014  Oleg Dolya
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +21,9 @@
 
 package com.watabou.glwrap;
 
-import java.nio.FloatBuffer;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
+
+import java.nio.FloatBuffer;
 
 public class Attribute {
 
@@ -43,6 +46,10 @@ public class Attribute {
 	}
 	
 	public void vertexPointer( int size, int stride, FloatBuffer ptr ) {
-		Gdx.gl.glVertexAttribPointer( location, size, GL20.GL_FLOAT, false, stride * Float.SIZE / 8, ptr );
+		Gdx.gl.glVertexAttribPointer( location, size, Gdx.gl.GL_FLOAT, false, stride * 4, ptr );
+	}
+
+	public void vertexBuffer( int size, int stride, int offset) {
+		Gdx.gl.glVertexAttribPointer(location, size, Gdx.gl.GL_FLOAT, false, stride * 4, offset * 4);
 	}
 }

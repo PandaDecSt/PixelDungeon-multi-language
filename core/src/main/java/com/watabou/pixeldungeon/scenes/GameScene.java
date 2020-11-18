@@ -287,7 +287,7 @@ public class GameScene extends PixelScene {
 			Dungeon.droppedItems.remove( Dungeon.depth );
 		}
 		
-		Camera.main.target = hero;
+		Camera.main.panFollow((Visual)hero,20f);
 
 		if (InterlevelScene.mode != InterlevelScene.Mode.NONE) {
 			if (Dungeon.depth < Statistics.deepestFloor) {

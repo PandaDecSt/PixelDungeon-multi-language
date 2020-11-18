@@ -211,13 +211,12 @@ public class WndRanking extends WndTabbed {
 		private float statSlot( Group parent, String label, String value, float pos ) {
 			
 			BitmapText txt = PixelScene.createText( label, 7 );
-			txt.y = pos;
+			txt.setPosY(pos);
 			parent.add( txt );
 			
 			txt = PixelScene.createText( value, 7 );
-			txt.measure();
-			txt.x = PixelScene.align( WIDTH * 0.65f );
-			txt.y = pos;
+			
+			txt.setPos( PixelScene.align( WIDTH * 0.65f ), pos);
 			parent.add( txt );
 			
 			return pos + GAP + txt.baseLine();
@@ -394,18 +393,17 @@ public class WndRanking extends WndTabbed {
 			
 			super.layout();
 			
-			name.x = slot.right() + 2;
-			name.y = y + (height - name.baseLine()) / 2;
+			name.setPos(slot.right() + 2,y + (height - name.baseLine()) / 2);
 			
 			String str = Utils.capitalize( item.name() );
 			name.text( str );
-			name.measure();
-			if (name.width() > width - name.x) {
+			
+			if (name.width() > width - name.getX()) {
 				do {
 					str = str.substring( 0, str.length() - 1 );
 					name.text( str + "..." );
-					name.measure();
-				} while (name.width() > width - name.x);
+					
+				} while (name.width() > width - name.getX());
 			}
 		}
 	}

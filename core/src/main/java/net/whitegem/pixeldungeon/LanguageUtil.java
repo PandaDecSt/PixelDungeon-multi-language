@@ -108,34 +108,34 @@ public class LanguageUtil
         if (!code.equals("en"))
         {
             // 3x5 (6)
-            PixelScene.font1x = BitmapText.Font.colorMarked(
-                    BitmapCache.get(fonts.get("font1x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font1x").fnt, fonts.get("font1x").scale);
-            PixelScene.font1x.baseLine = fonts.get("font1x").getBaseline(7);
-            PixelScene.font1x.tracking = -1;
-
-            // 5x8 (10)
-            PixelScene.font15x = BitmapText.Font.colorMarked(
-                    BitmapCache.get(fonts.get("font15x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font15x").fnt, fonts.get("font15x").scale);
-            PixelScene.font15x.baseLine = fonts.get("font15x").getBaseline(10);
-            PixelScene.font15x.tracking = -1;
-
-            // 6x10 (12)
-            PixelScene.font2x = BitmapText.Font.colorMarked(
-                    BitmapCache.get(fonts.get("font2x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font2x").fnt, fonts.get("font2x").scale);
-            PixelScene.font2x.baseLine = fonts.get("font2x").getBaseline(12);
-            PixelScene.font2x.tracking = -1;
-
-            // 7x12 (15)
-            PixelScene.font25x = BitmapText.Font.colorMarked(
-                    BitmapCache.get(fonts.get("font25x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font25x").fnt, fonts.get("font25x").scale);
-            PixelScene.font25x.baseLine = fonts.get("font25x").getBaseline(18);
-            PixelScene.font25x.tracking = -1;
-
-            // 9x15 (18)
-            PixelScene.font3x = BitmapText.Font.colorMarked(
-                    BitmapCache.get(fonts.get("font3x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font3x").fnt, fonts.get("font3x").scale);
-            PixelScene.font3x.baseLine = fonts.get("font3x").getBaseline(22);
-            PixelScene.font3x.tracking = -1;
+//            PixelScene.font1x = BitmapText.Font.colorMarked(
+//                    BitmapCache.get(fonts.get("font1x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font1x").fnt, fonts.get("font1x").scale);
+//            PixelScene.font1x.baseLine = fonts.get("font1x").getBaseline(7);
+//            PixelScene.font1x.tracking = -1;
+//
+//            // 5x8 (10)
+//            PixelScene.font15x = BitmapText.Font.colorMarked(
+//                    BitmapCache.get(fonts.get("font15x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font15x").fnt, fonts.get("font15x").scale);
+//            PixelScene.font15x.baseLine = fonts.get("font15x").getBaseline(10);
+//            PixelScene.font15x.tracking = -1;
+//
+//            // 6x10 (12)
+//            PixelScene.font2x = BitmapText.Font.colorMarked(
+//                    BitmapCache.get(fonts.get("font2x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font2x").fnt, fonts.get("font2x").scale);
+//            PixelScene.font2x.baseLine = fonts.get("font2x").getBaseline(12);
+//            PixelScene.font2x.tracking = -1;
+//
+//            // 7x12 (15)
+//            PixelScene.font25x = BitmapText.Font.colorMarked(
+//                    BitmapCache.get(fonts.get("font25x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font25x").fnt, fonts.get("font25x").scale);
+//            PixelScene.font25x.baseLine = fonts.get("font25x").getBaseline(18);
+//            PixelScene.font25x.tracking = -1;
+//
+//            // 9x15 (18)
+//            PixelScene.font3x = BitmapText.Font.colorMarked(
+//                    BitmapCache.get(fonts.get("font3x").png), 0x00000000, BitmapText.Font.LATIN_FULL, fonts.get("font3x").fnt, fonts.get("font3x").scale);
+//            PixelScene.font3x.baseLine = fonts.get("font3x").getBaseline(22);
+//            PixelScene.font3x.tracking = -1;
         }
     }
 }

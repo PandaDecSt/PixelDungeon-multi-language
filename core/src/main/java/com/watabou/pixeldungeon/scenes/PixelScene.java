@@ -21,13 +21,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.watabou.input.NoosaInputProcessor;
 import com.watabou.noosa.*;
-import com.watabou.noosa.BitmapText.Font;
+import com.watabou.noosa.BitmapText;
 import com.watabou.noosa.audio.Sample;
 import com.watabou.pixeldungeon.Assets;
 import com.watabou.pixeldungeon.Badges;
 import com.watabou.pixeldungeon.PixelDungeon;
 import com.watabou.pixeldungeon.effects.BadgeBanner;
 import com.watabou.utils.BitmapCache;
+import com.watabou.noosa.ui.Component;
 
 public class PixelScene extends Scene {
 	
@@ -44,12 +45,6 @@ public class PixelScene extends Scene {
 	public static float maxZoom;
 	
 	public static Camera uiCamera;
-	
-	public static BitmapText.Font font1x;
-	public static BitmapText.Font font15x;
-	public static BitmapText.Font font2x;
-	public static BitmapText.Font font25x;
-	public static BitmapText.Font font3x;
 	
 	@Override
 	public void create() {
@@ -93,38 +88,18 @@ public class PixelScene extends Scene {
 		uiCamera = Camera.createFullscreen( uiZoom );
 		Camera.add( uiCamera );
 		
-		if (font1x == null) {
-			
-			// 3x5 (6)
-			font1x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS1X ), 0x00000000, BitmapText.Font.LATIN_FULL );
-			font1x.baseLine = 6;
-			font1x.tracking = -1;
-			
-			// 5x8 (10)
-			font15x = Font.colorMarked( 
-					BitmapCache.get( Assets.FONTS15X ), 12, 0x00000000, BitmapText.Font.LATIN_FULL );
-			font15x.baseLine = 9;
-			font15x.tracking = -1;
-			
-			// 6x10 (12)
-			font2x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS2X ), 14, 0x00000000, BitmapText.Font.LATIN_FULL );
-			font2x.baseLine = 11;
-			font2x.tracking = -1;
-			
-			// 7x12 (15)
-			font25x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS25X ), 17, 0x00000000, BitmapText.Font.LATIN_FULL );
-			font25x.baseLine = 13;
-			font25x.tracking = -1;
-			
-			// 9x15 (18)
-			font3x = Font.colorMarked( 
-				BitmapCache.get( Assets.FONTS3X ), 22, 0x00000000, BitmapText.Font.LATIN_FULL );
-			font3x.baseLine = 17;
-			font3x.tracking = -2;
+        int renderedTextPageSize;
+        if (defaultZoom <= 3){
+            renderedTextPageSize = 256;
+        } else if (defaultZoom <= 8){
+            renderedTextPageSize = 512;
+        } else {
+            renderedTextPageSize = 1024;
 		}
+        
+        renderedTextPageSize *= 2;
+        
+        Game.platform.setupFontGenerators(renderedTextPageSize, true);
 	}
 
 	@Override
@@ -133,112 +108,41 @@ public class PixelScene extends Scene {
 		Game.instance.getInputProcessor().removeAllTouchEvent();
 	}
 	
-	public static BitmapText.Font font;
-	public static float scale;
-	
-	public static void chooseFont( float size ) {
-		chooseFont( size, defaultZoom );
-	}
-
-	public static void chooseFont( float size, float zoom ) {
-
-		float pt = size * zoom;
-
-		if (pt >= 19) {
-
-			scale = pt / 19;
-			if (1.5 <= scale && scale < 2) {
-				font = font25x;
-				scale = (int)(pt / 14);
-			} else {
-				font = font3x;
-				scale = (int)scale;
-			}
-
-		} else if (pt >= 14) {
-
-			scale = pt / 14;
-			if (1.8 <= scale && scale < 2) {
-				font = font2x;
-				scale = (int)(pt / 12);
-			} else {
-				font = font25x;
-				scale = (int)scale;
-			}
-
-		} else if (pt >= 12) {
-
-			scale = pt / 12;
-			if (1.7 <= scale && scale < 2) {
-				font = font15x;
-				scale = (int)(pt / 10);
-			} else {
-				font = font2x;
-				scale = (int)scale;
-			}
-
-		} else if (pt >= 10) {
-
-			scale = pt / 10;
-			if (1.4 <= scale && scale < 2) {
-				font = font1x;
-				scale = (int)(pt / 7);
-			} else {
-				font = font15x;
-				scale = (int)scale;
-			}
-
-		} else {
-
-			font = font1x;
-			scale = Math.max( 1, (int)(pt / 7) );
-
-		}
-
-		scale /= zoom;
-	}
-	
 	public static BitmapText createText( float size ) {
-		return createText( null, size );
+		return createText( "", size );
 	}
 	
 	public static BitmapText createText( String text, float size ) {
-		
-		chooseFont( size );
-		
-		BitmapText result = new BitmapText( text, font );
-		result.scale.set( scale );
-		
+		BitmapText result = new BitmapText( text, (int)(size*defaultZoom));
+        result.zoom(1/(float)defaultZoom);
 		return result;
 	}
 	
 	public static BitmapTextMultiline createMultiline( float size ) {
-		return createMultiline( null, size );
+		return createMultiline( "", size );
 	}
 	
 	public static BitmapTextMultiline createMultiline( String text, float size ) {
-		
-		chooseFont( size );
-		
-		BitmapTextMultiline result = new BitmapTextMultiline( text, font );
-		result.scale.set( scale );
-		
+        BitmapTextMultiline result = new BitmapTextMultiline( text, (int)(size*defaultZoom));
+        result.zoom(1/(float)defaultZoom);
 		return result;
 	}
 	
-	public static float align( Camera camera, float pos ) {
-		return ((int)(pos * camera.zoom)) / camera.zoom;
+    public static float align( float pos ) {
+        return Math.round(pos * defaultZoom) / (float)defaultZoom;
+    }
+
+    public static float align( Camera camera, float pos ) {
+        return Math.round(pos * camera.zoom) / camera.zoom;
+    }
+
+    public static void align( Visual v ) {
+        v.x = align( v.x );
+        v.y = align( v.y );
 	}
-	
-	// This one should be used for UI elements
-	public static float align( float pos ) {
-		return ((int)(pos * defaultZoom)) / defaultZoom;
-	}
-	
-	public static void align( Visual v ) {
-		Camera c = v.camera();
-		v.x = align( c, v.x );
-		v.y = align( c, v.y );
+    
+    public static void align( Component c ){
+        c.setPos(align(c.left()), align(c.top()));
 	}
 	
 	public static boolean noFade = false;

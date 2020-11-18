@@ -1,10 +1,11 @@
 android {
-    compileSdkVersion 19
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
     
     defaultConfig {
         applicationId "com.kurtyu.pd"
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 29
     }
     
 }

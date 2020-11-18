@@ -77,7 +77,7 @@ public class StatusPane extends Component {
 			protected void onClick( NoosaInputProcessor.Touch touch ) {
 				Image sprite = Dungeon.hero.sprite;
 				if (!sprite.isVisible()) {
-					Camera.main.focusOn( sprite );
+					Camera.main.snapTo( sprite.center() );
 				}
 				GameScene.show( new WndHero() );
 			};			
@@ -114,7 +114,6 @@ public class StatusPane extends Component {
 		depth = createText(6);
 		depth.text(Integer.toString( Dungeon.depth ));
 		depth.hardlight( 0xCACFC2 );
-		depth.measure();
 		add( depth );
 		
 		Dungeon.hero.belongings.countIronKeys();
@@ -152,10 +151,9 @@ public class StatusPane extends Component {
 		hp.x = 30;
 		hp.y = 3;
 		
-		depth.x = width - 24 - depth.width()    - 18;
-		depth.y = 6;
+		depth.setPos(width - 24 - depth.width()    - 18, 6);
 		
-		keys.y = 6;
+		keys.setPosY(6);
 		
 		layoutTags();
 		
@@ -227,17 +225,15 @@ public class StatusPane extends Component {
 			
 			lastLvl = Dungeon.hero.lvl;
 			level.text( Integer.toString( lastLvl ) );
-			level.measure();
-			level.x = PixelScene.align( 27.5f - level.width() / 2 );
-			level.y = PixelScene.align( 28.0f - level.baseLine() / 2 );
+			
+			level.setPos(PixelScene.align( 27.5f - level.width() / 2 ), PixelScene.align( 28.0f - level.height() / 2 ));
 		}
 		
 		int k = IronKey.curDepthQuantity;
 		if (k != lastKeys) {
 			lastKeys = k;
 			keys.text( Integer.toString( lastKeys ) );
-			keys.measure();
-			keys.x = width - 8 - keys.width()    - 18;
+			keys.setPosX(width - 8 - keys.width()    - 18);
 		}
 		
 		int tier = Dungeon.hero.tier();

@@ -52,8 +52,8 @@ public class WndJournal extends Window {
 		
 		txtTitle = PixelScene.createText( TXT_TITLE, 9 );
 		txtTitle.hardlight( Window.TITLE_COLOR );
-		txtTitle.measure();
-		txtTitle.x = PixelScene.align( PixelScene.uiCamera, (WIDTH - txtTitle.width()) / 2 );
+		
+		txtTitle.setPosX( PixelScene.align( PixelScene.uiCamera, (WIDTH - txtTitle.width()) / 2 ));
 		add( txtTitle );
 		
 		Component content = new Component();
@@ -88,10 +88,10 @@ public class WndJournal extends Window {
 			super();
 			
 			feature.text( f.desc );
-			feature.measure();
+			
 			
 			depth.text( Integer.toString( d ) );
-			depth.measure();
+			
 			
 			if (d == Dungeon.depth) {
 				feature.hardlight( TITLE_COLOR );
@@ -117,12 +117,11 @@ public class WndJournal extends Window {
 			
 			icon.x = width - icon.width;
 			
-			depth.x = icon.x - 1 - depth.width();
-			depth.y = PixelScene.align( y + (height - depth.height()) / 2 );
+			depth.setPos(icon.x - 1 - depth.width(), PixelScene.align( y + (height - depth.height()) / 2 ));
 			
-			icon.y = depth.y - 1;
+			icon.y = depth.getY() - 1;
 			
-			feature.y = PixelScene.align( depth.y + depth.baseLine() - feature.baseLine() );
+			feature.setPosY(PixelScene.align( depth.getY() + depth.baseLine() - feature.baseLine() ));
 		}
 	}
 }

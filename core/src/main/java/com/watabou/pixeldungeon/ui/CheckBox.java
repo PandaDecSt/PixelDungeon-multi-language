@@ -33,11 +33,11 @@ public class CheckBox extends RedButton {
 	protected void layout() {
 		super.layout();
 		
-		float margin = (height - text.baseLine()) / 2;
+		float margin = (height - text.height()) / 2;
 		
-		text.x = PixelScene.align( PixelScene.uiCamera, x + margin );
-		text.y = PixelScene.align( PixelScene.uiCamera, y + margin );
-		
+		text.setPos( x + margin, y + margin);
+		PixelScene.align(text);
+        
 		margin = (height - icon.height) / 2;
 		
 		icon.x = PixelScene.align( PixelScene.uiCamera, x + width - margin - icon.width );

@@ -6,9 +6,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.0'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.6.1'
     }
 }
 
@@ -18,7 +16,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "像素地牢(简体中文版)"
+        appName = "XYPD"
         gdxVersion = '1.9.10'
         gdxPayVersion = "0.10.3"
         roboVMVersion = '2.3.0'
@@ -32,19 +30,6 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
-    }
-}
-
-project(":android") {
-    apply plugin: 'com.google.gms.google-services'
-    apply plugin: "android"
-
-    configurations { natives }
-
-    dependencies {
-        compile project(":core")
-        compile 'com.google.android.gms:play-services-analytics:10.2.1'
-        compile 'com.android.support:appcompat-v7:27.1.1'
     }
 }
 

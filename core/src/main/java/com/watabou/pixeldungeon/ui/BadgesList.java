@@ -105,8 +105,7 @@ public class BadgesList extends ScrollPane {
 			icon.x = x;
 			icon.y = PixelScene.align( y + (height - icon.height) / 2 );
 			
-			label.x = icon.x + icon.width + 2;
-			label.y = PixelScene.align( y + (height - label.baseLine()) / 2 );
+			label.setPos( icon.x + icon.width + 2, PixelScene.align( y + (height - label.baseLine()) / 2 ));
 		}
 		
 		public boolean onClick( float x, float y ) {

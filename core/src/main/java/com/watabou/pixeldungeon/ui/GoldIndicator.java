@@ -47,8 +47,8 @@ public class GoldIndicator extends Component {
 	
 	@Override
 	protected void layout() {
-		tf.x = x + (width - tf.width()) / 2;
-		tf.y = bottom() - tf.height();
+		tf.setPos(x + (width - tf.width()) / 2, bottom() - tf.height());
+        add(tf);
 	}
 	
 	@Override
@@ -71,7 +71,6 @@ public class GoldIndicator extends Component {
 			lastValue = Dungeon.gold;
 			
 			tf.text( Integer.toString( lastValue ) );
-			tf.measure();
 			
 			visible = true;
 			time = TIME;

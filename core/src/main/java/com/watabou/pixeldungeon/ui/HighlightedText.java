@@ -25,8 +25,8 @@ public class HighlightedText extends Component {
 	
 	@Override
 	protected void layout() {
-		normal.x = highlighted.x = x;
-		normal.y = highlighted.y = y;
+		normal.setPos(x, y);
+		highlighted.setPos(x, y);
 	}
 	
 	public void text( String value, int maxWidth ) {
@@ -34,16 +34,15 @@ public class HighlightedText extends Component {
 		
 		normal.text( hl.text );
 		normal.maxWidth = maxWidth;
-		normal.measure();
+		
 		
 		if (hl.isHighlighted()) {
-			normal.mask = hl.inverted();
+//			normal.mask = hl.inverted();
 			
 			highlighted.text( hl.text );
 			highlighted.maxWidth = maxWidth;
-			highlighted.measure();
 			
-			highlighted.mask = hl.mask;
+//			highlighted.mask = hl.mask;
 			highlighted.visible = true;
 		} else {
 			highlighted.visible = false;

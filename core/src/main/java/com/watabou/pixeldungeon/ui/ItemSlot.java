@@ -103,18 +103,15 @@ public class ItemSlot extends Button {
 		icon.y = y + (height - icon.height) / 2;
 		
 		if (topLeft != null) {
-			topLeft.x = x;
-			topLeft.y = y;
+			topLeft.setPos(x, y);
 		}
 		
 		if (topRight != null) {
-			topRight.x = x + (width - topRight.width());
-			topRight.y = y;
+			topRight.setPos(x + (width - topRight.width()), y);
 		}
 		
 		if (bottomRight != null) {
-			bottomRight.x = x + (width - bottomRight.width());
-			bottomRight.y = y + (height - bottomRight.height());
+			bottomRight.setPos(x + (width - bottomRight.width()), y + (height - bottomRight.height()));
 		}
 	}
 	
@@ -155,7 +152,7 @@ public class ItemSlot extends Button {
 					topRight.hardlight( WARNING );
 					
 				}
-				topRight.measure();
+				
 				
 			} else {
 				
@@ -166,7 +163,7 @@ public class ItemSlot extends Button {
 			int level = item.visiblyUpgraded(); 
 			if (level != 0 || (item.cursed && item.cursedKnown)) {
 				bottomRight.text( item.levelKnown ? Utils.format( TXT_LEVEL, level ) : TXT_CURSED );
-				bottomRight.measure();
+				
 				bottomRight.hardlight( level > 0 ? (item.isBroken() ? WARNING : UPGRADED) : DEGRADED );
 			} else {
 				bottomRight.text( null );

@@ -54,8 +54,8 @@ public class WndImp extends Window {
 		
 		BitmapTextMultiline message = PixelScene.createMultiline( TXT_MESSAGE, 6 );
 		message.maxWidth = WIDTH;
-		message.measure();
-		message.y = titlebar.bottom() + GAP;
+		
+		message.setPosY(titlebar.bottom() + GAP);
 		add( message );
 		
 		RedButton btnReward = new RedButton( TXT_REWARD ) {
@@ -64,7 +64,7 @@ public class WndImp extends Window {
 				takeReward( imp, tokens, Imp.Quest.reward );
 			}
 		};
-		btnReward.setRect( 0, message.y + message.height() + GAP, WIDTH, BTN_HEIGHT );
+		btnReward.setRect( 0, message.getY() + message.height() + GAP, WIDTH, BTN_HEIGHT );
 		add( btnReward );
 		
 		resize( WIDTH, (int)btnReward.bottom() );

@@ -160,7 +160,7 @@ public class WndTabbed extends Window {
 			super();
 			
 			btLabel.text( label );
-			btLabel.measure();
+			
 		}
 		
 		@Override
@@ -175,17 +175,17 @@ public class WndTabbed extends Window {
 		protected void layout() {
 			super.layout();
 			
-			btLabel.x = PixelScene.align( x + (width - btLabel.width()) / 2 );
-			btLabel.y = PixelScene.align( y + (height - btLabel.baseLine()) / 2 ) - 1;
+			btLabel.setPosX(PixelScene.align( x + (width - btLabel.width()) / 2 ));
+			btLabel.setPosY(PixelScene.align( y + (height - btLabel.baseLine()) / 2 ) - 1);
 			if (!selected) {
-				btLabel.y -= 2;
+				btLabel.setPosY(btLabel.getY()-2);
 			}
 		}
 		
 		@Override
 		protected void select( boolean value ) {
 			super.select( value );
-			btLabel.am = selected ? 1.0f : 0.6f;
+//			btLabel.am = selected ? 1.0f : 0.6f;
 		}
 	}	
 

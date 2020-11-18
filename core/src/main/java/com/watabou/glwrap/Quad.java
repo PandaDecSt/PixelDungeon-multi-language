@@ -1,5 +1,9 @@
 /*
- * Copyright (C) 2012-2014  Oleg Dolya
+ * Pixel Dungeon
+ * Copyright (C) 2012-2015 Oleg Dolya
+ *
+ * Shattered Pixel Dungeon
+ * Copyright (C) 2014-2021 Evan Debenham
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +21,7 @@
 
 package com.watabou.glwrap;
 
-import com.badlogic.gdx.utils.IntMap;
+import com.badlogic.gdx.Gdx;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -32,13 +36,10 @@ public class Quad {
 	public static final short[] VALUES = {0, 1, 2, 0, 2, 3};
 	
 	public static final int SIZE = VALUES.length;
-
-	// TODO: check if this cache is growing too much, or find another solution
-	private static final IntMap<ShortBuffer> cache = new IntMap<ShortBuffer>();
-	public static final ShortBuffer INDICES_1 = getIndices(1);
-	static {
-		cache.put(1, INDICES_1);
-	}
+	
+	private static ShortBuffer indices;
+	private static int indexSize = 0;
+	private static int bufferIndex = -1;
 	
 	public static FloatBuffer create() {
 		return ByteBuffer.
@@ -53,14 +54,31 @@ public class Quad {
 			order( ByteOrder.nativeOrder() ).
 			asFloatBuffer();
 	}
+
+	//sets up for drawing up to 32k quads in one command, shouldn't ever need to exceed this
+	public static void setupIndices(){
+		ShortBuffer indices = getIndices( Short.MAX_VALUE );
+		if (bufferIndex == -1){
+			bufferIndex = Gdx.gl.glGenBuffer();
+		}
+		Gdx.gl.glBindBuffer(Gdx.gl.GL_ELEMENT_ARRAY_BUFFER, bufferIndex);
+		Gdx.gl.glBufferData(Gdx.gl.GL_ELEMENT_ARRAY_BUFFER, (indices.capacity()*2), indices, Gdx.gl.GL_STATIC_DRAW);
+		Gdx.gl.glBindBuffer(Gdx.gl.GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
+	public static void bindIndices(){
+		Gdx.gl.glBindBuffer(Gdx.gl.GL_ELEMENT_ARRAY_BUFFER, bufferIndex);
+	}
+
+	public static void releaseIndices(){
+		Gdx.gl.glBindBuffer(Gdx.gl.GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
 	
 	public static ShortBuffer getIndices( int size ) {
-
-		ShortBuffer indices = cache.get(size);
-		if (indices == null) {
+		
+		if (size > indexSize) {
 			
-			// TODO: Optimize it!
-			
+			indexSize = size;
 			indices = ByteBuffer.
 				allocateDirect( size * SIZE * Short.SIZE / 8 ).
 				order( ByteOrder.nativeOrder() ).
@@ -80,15 +98,13 @@ public class Quad {
 			
 			indices.put( values );
 			indices.position( 0 );
-
-			cache.put(size, indices);
 		}
-
+		
 		return indices;
 	}
 	
-	public static void fill( float[] v, 
-		float x1, float x2, float y1, float y2, 
+	public static void fill( float[] v,
+		float x1, float x2, float y1, float y2,
 		float u1, float u2, float v1, float v2 ) {
 		
 		v[0] = x1;

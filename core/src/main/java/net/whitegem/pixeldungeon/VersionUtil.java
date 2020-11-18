@@ -69,34 +69,34 @@ public class VersionUtil
     {
         LanguageFactory.INSTANCE.setLanguage("en");
         // 3x5 (6)
-        PixelScene.font1x = BitmapText.Font.colorMarked(
-                BitmapCache.get(Assets.FONTS1X), 0x00000000, BitmapText.Font.LATIN_FULL);
-        PixelScene.font1x.baseLine = 6;
-        PixelScene.font1x.tracking = -1;
-
-        // 5x8 (10)
-        PixelScene.font15x = BitmapText.Font.colorMarked(
-                BitmapCache.get(Assets.FONTS15X), 12, 0x00000000, BitmapText.Font.LATIN_FULL);
-        PixelScene.font15x.baseLine = 9;
-        PixelScene.font15x.tracking = -1;
-
-        // 6x10 (12)
-        PixelScene.font2x = BitmapText.Font.colorMarked(
-                BitmapCache.get(Assets.FONTS2X), 14, 0x00000000, BitmapText.Font.LATIN_FULL);
-        PixelScene.font2x.baseLine = 11;
-        PixelScene.font2x.tracking = -1;
-
-        // 7x12 (15)
-        PixelScene.font25x = BitmapText.Font.colorMarked(
-                BitmapCache.get(Assets.FONTS25X), 17, 0x00000000, BitmapText.Font.LATIN_FULL);
-        PixelScene.font25x.baseLine = 13;
-        PixelScene.font25x.tracking = -1;
-
-        // 9x15 (18)
-        PixelScene.font3x = BitmapText.Font.colorMarked(
-                BitmapCache.get(Assets.FONTS3X), 22, 0x00000000, BitmapText.Font.LATIN_FULL);
-        PixelScene.font3x.baseLine = 17;
-        PixelScene.font3x.tracking = -2;
+//        PixelScene.font1x = BitmapText.Font.colorMarked(
+//                BitmapCache.get(Assets.FONTS1X), 0x00000000, BitmapText.Font.LATIN_FULL);
+//        PixelScene.font1x.baseLine = 6;
+//        PixelScene.font1x.tracking = -1;
+//
+//        // 5x8 (10)
+//        PixelScene.font15x = BitmapText.Font.colorMarked(
+//                BitmapCache.get(Assets.FONTS15X), 12, 0x00000000, BitmapText.Font.LATIN_FULL);
+//        PixelScene.font15x.baseLine = 9;
+//        PixelScene.font15x.tracking = -1;
+//
+//        // 6x10 (12)
+//        PixelScene.font2x = BitmapText.Font.colorMarked(
+//                BitmapCache.get(Assets.FONTS2X), 14, 0x00000000, BitmapText.Font.LATIN_FULL);
+//        PixelScene.font2x.baseLine = 11;
+//        PixelScene.font2x.tracking = -1;
+//
+//        // 7x12 (15)
+//        PixelScene.font25x = BitmapText.Font.colorMarked(
+//                BitmapCache.get(Assets.FONTS25X), 17, 0x00000000, BitmapText.Font.LATIN_FULL);
+//        PixelScene.font25x.baseLine = 13;
+//        PixelScene.font25x.tracking = -1;
+//
+//        // 9x15 (18)
+//        PixelScene.font3x = BitmapText.Font.colorMarked(
+//                BitmapCache.get(Assets.FONTS3X), 22, 0x00000000, BitmapText.Font.LATIN_FULL);
+//        PixelScene.font3x.baseLine = 17;
+//        PixelScene.font3x.tracking = -2;
     }
 
     private static void checkGithubIsLatest()

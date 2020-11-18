@@ -205,18 +205,18 @@ public class StartScene extends PixelScene {
 		
 			BitmapTextMultiline text = PixelScene.createMultiline( TXT_UNLOCK, 9 );
 			text.maxWidth = (int)width;
-			text.measure();
 			
-			float pos = (bottom - BUTTON_HEIGHT) + (BUTTON_HEIGHT - text.height()) / 2;
-			for (BitmapText line : text.new LineSplitter().split()) {
-				line.measure();
-				line.hardlight( 0xFFFF00 );
-				line.x = PixelScene.align( w / 2 - line.width() / 2 );
-				line.y = PixelScene.align( pos );
-				unlock.add( line );
-				
-				pos += line.height(); 
-			}
+			
+//			float pos = (bottom - BUTTON_HEIGHT) + (BUTTON_HEIGHT - text.height()) / 2;
+//			for (BitmapText line : text.new LineSplitter().split()) {
+//				
+//				line.hardlight( 0xFFFF00 );
+//				line.x = PixelScene.align( w / 2 - line.width() / 2 );
+//				line.y = PixelScene.align( pos );
+//				unlock.add( line );
+//				
+//				pos += line.height(); 
+//			}
 		}
 		
 		ExitButton btnExit = new ExitButton();
@@ -283,7 +283,7 @@ public class StartScene extends PixelScene {
 				btnLoad.visible = false;
 				
 				btnNewGame.visible = true;
-				btnNewGame.secondary( null, false );
+				btnNewGame.secondary( "", false );
 				btnNewGame.setRect( buttonX, buttonY, Camera.main.width - buttonX * 2, BUTTON_HEIGHT );
 			}
 			
@@ -339,19 +339,19 @@ public class StartScene extends PixelScene {
 		protected void layout() {
 			super.layout();
 			
-			if (secondary.text().length() > 0) {
-				text.y = align( y + (height - text.height() - secondary.baseLine()) / 2 );
+                if (secondary.text() != null && secondary.text().length() > 0) {
+				text.setPosY(align( y + (height - text.height() - secondary.baseLine()) / 2 ));
 				
-				secondary.x = align( x + (width - secondary.width()) / 2 );
-				secondary.y = align( text.y + text.height() ); 
+				secondary.setPos(align( x + (width - secondary.width()) / 2 ), align( text.getY() + text.height() )); 
 			} else {
-				text.y = align( y + (height - text.baseLine()) / 2 );
+				text.setPosY( align( y + (height - text.baseLine()) / 2 ));
 			}
+         
 		}
 		
 		public void secondary( String text, boolean highlighted ) {
 			secondary.text( text );
-			secondary.measure();
+			
 			
 			secondary.hardlight( highlighted ? SECONDARY_COLOR_H : SECONDARY_COLOR_N );
 		}
@@ -399,7 +399,7 @@ public class StartScene extends PixelScene {
 			}
 			
 			name.text( cl.name() );
-			name.measure();
+			
 			name.hardlight( normal );
 			
 			brightness = MIN_BRIGHTNESS;
@@ -431,8 +431,7 @@ public class StartScene extends PixelScene {
 			avatar.x = align( x + (width - avatar.width()) / 2 );
 			avatar.y = align( y + (height - avatar.height() - name.height()) / 2 );
 			
-			name.x = align( x + (width - name.width()) / 2 );
-			name.y = avatar.y + avatar.height() + SCALE;
+			name.setPos(align( x + (width - name.width()) / 2 ), avatar.y + avatar.height() + SCALE);
 		}
 		
 		@Override

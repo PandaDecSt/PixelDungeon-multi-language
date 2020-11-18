@@ -31,6 +31,10 @@ public class Component extends Group {
 		createChildren();
 	}
 	
+    public void setlayout() {   
+    layout();
+	}
+    
 	public Component setPos( float x, float y ) {
 		this.x = x;
 		this.y = y;
@@ -38,6 +42,23 @@ public class Component extends Group {
 		
 		return this;
 	}
+    
+    public Component setPosX( float x ) {
+        this.x = x;
+        layout();
+
+        return this;
+	}
+    
+    public Component setPosY( float y ) {
+        this.y = y;
+        layout();
+        
+        return this;
+	}
+    
+    public float getX(){return x;};
+    public float getY(){return y;};
 	
 	public Component setSize( float width, float height ) {
 		this.width = width;

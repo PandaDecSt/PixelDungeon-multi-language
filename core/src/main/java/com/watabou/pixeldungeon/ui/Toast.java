@@ -69,15 +69,14 @@ public class Toast extends Component {
 		close.setPos( 
 			bg.x + bg.width() - bg.marginHor() / 2 - MARGIN_HOR - close.width(),
 			y + (height - close.height()) / 2 );
-		
-		text.x = close.left() - MARGIN_HOR - text.width();
-		text.y = y + (height - text.height()) / 2;
-		PixelScene.align( text );
+		PixelScene.align(close);
+		text.setPos(close.left() - MARGIN_HOR - text.width(), y + (height - text.height()) / 2);
+		PixelScene.align(text);
 	}
 	
 	public void text( String txt ) {
 		text.text( txt );
-		text.measure();
+		
 	}
 	
 	protected void onClose() {};

@@ -77,10 +77,9 @@ public class WndInfoCell extends Window {
 		
 		info.text( desc.length() > 0 ? desc.toString() : TXT_NOTHING );
 		info.maxWidth = WIDTH;
-		info.measure();
-		info.x = titlebar.left();
-		info.y = titlebar.bottom() + GAP;
 		
-		resize( WIDTH, (int)(info.y + info.height()) );
+		info.setPos( titlebar.left(),  titlebar.bottom() + GAP);
+		
+		resize( WIDTH, (int)(info.bottom()) );
 	}
 }

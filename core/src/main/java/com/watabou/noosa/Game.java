@@ -36,6 +36,9 @@ import com.watabou.utils.SystemTime;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import com.watabou.utils.PlatformSupport;
+import com.watabou.utils.Callback;
+import com.watabou.utils.AndroidPlatformSupport;
 
 public abstract class Game<GameActionType> implements ApplicationListener {
 
@@ -69,6 +72,8 @@ public abstract class Game<GameActionType> implements ApplicationListener {
 	
 	public static float timeScale = 1f;
 	public static float elapsed = 0f;
+	
+	public static AndroidPlatformSupport platform = new AndroidPlatformSupport();
 
 	public Game( Class<? extends Scene> c, PDPlatformSupport<GameActionType> platformSupport ) {
 		super();
@@ -153,6 +158,15 @@ public abstract class Game<GameActionType> implements ApplicationListener {
 				switchScene(sc.getClass());
 			}
 		}
+	}
+	
+	public static void runOnRenderThread(final Callback c){
+		Gdx.app.postRunnable(new Runnable() {
+			@Override
+			public void run() {
+				c.call();
+			}
+		});
 	}
 
 	public void onSurfaceCreated() {

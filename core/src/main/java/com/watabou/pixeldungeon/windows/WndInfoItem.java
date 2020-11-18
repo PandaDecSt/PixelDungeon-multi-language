@@ -119,11 +119,9 @@ public class WndInfoItem extends Window {
 		
 		BitmapTextMultiline txtInfo = PixelScene.createMultiline( info, 6 );
 		txtInfo.maxWidth = WIDTH;
-		txtInfo.measure();
-		txtInfo.x = titlebar.left();
-		txtInfo.y = titlebar.bottom() + GAP;
+		txtInfo.setPos(titlebar.left(), titlebar.bottom() + GAP);
 		add( txtInfo );
 		
-		resize( WIDTH, (int)(txtInfo.y + txtInfo.height()) );
+		resize( WIDTH, (int)(txtInfo.bottom() + 2) );
 	}
 }

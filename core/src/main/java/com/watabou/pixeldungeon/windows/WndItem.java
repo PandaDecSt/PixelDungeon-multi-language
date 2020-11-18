@@ -59,12 +59,10 @@ public class WndItem extends Window {
 		
 		BitmapTextMultiline info = PixelScene.createMultiline( item.info(), 6 );
 		info.maxWidth = WIDTH;
-		info.measure();
-		info.x = titlebar.left();
-		info.y = titlebar.bottom() + GAP;
+		info.setPos(titlebar.left(), titlebar.bottom() + GAP);
 		add( info );
 	
-		float y = info.y + info.height() + GAP;
+		float y = info.bottom() + GAP;
 		float x = 0;
 		
 		if (Dungeon.hero.isAlive() && owner != null) {

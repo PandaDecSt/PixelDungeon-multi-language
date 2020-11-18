@@ -30,15 +30,13 @@ public class LanguageFactory
 
     public static String getTranslation(String text)
     {
+        if(text != null && !text.equals("")){
         if (!INSTANCE.language.equals("en"))
         {
             System.out.println("嘗試取得翻譯 >>> " + text.toLowerCase());
             String s = null;
 
-            if (text == null)
-            {
-                return null;
-            }
+            
 
             if (INSTANCE.stored.contains(text.toLowerCase()))
             {
@@ -58,6 +56,10 @@ public class LanguageFactory
 
             System.out.println("翻譯完成 >>> " + s);
             return s;
+        }
+        } else if (text == null)
+        {
+            return null;
         }
         return text;
     }

@@ -68,8 +68,7 @@ public class DangerIndicator extends Tag {
 	}
 	
 	private void placeNumber() {
-		number.x = right() - 11 - number.width();
-		number.y = PixelScene.align( y + (height - number.baseLine()) / 2 );
+		number.setPos(right() - 11 - number.width(),PixelScene.align( y + (height - number.baseLine()) / 2 ));
 	}
 	
 	@Override
@@ -81,7 +80,7 @@ public class DangerIndicator extends Tag {
 				lastNumber = v;
 				if (visible = lastNumber > 0) {
 					number.text( Integer.toString( lastNumber ) );
-					number.measure();
+					
 					placeNumber();
 
 					flash();
@@ -101,7 +100,7 @@ public class DangerIndicator extends Tag {
 		
 		HealthIndicator.instance.target( target == HealthIndicator.instance.target() ? null : target );
 		
-		Camera.main.target = null;
-		Camera.main.focusOn( target.sprite );
+		//Camera.main.followTarget = null;
+		Camera.main.snapTo( target.sprite.center() );
 	}
 }
