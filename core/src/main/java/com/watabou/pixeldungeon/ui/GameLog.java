@@ -89,7 +89,7 @@ public class GameLog extends Component implements Signal.Listener<String> {
 		} else {
 
 			lastEntry = PixelScene.createMultiline( text, 6 );
-			lastEntry.maxWidth = (int) width;
+			lastEntry.maxWidth((int) width);
 			
 			lastEntry.hardlight( color );
 			lastColor = color;

@@ -47,14 +47,14 @@ public class AboutScene extends PixelScene {
 		super.create();
 
 		BitmapTextMultiline text = createMultiline( TXT, 4 );
-		text.maxWidth = Math.min( Camera.main.width, 120 );
+		text.maxWidth(Math.min( Camera.main.width, 120 ));
 		
 		add( text );
 
 		text.setPos(align( (Camera.main.width - text.width()) / 2 ), align( (Camera.main.height - text.height()) / 2 ));
 
 		BitmapTextMultiline link = createMultiline( LNK, 4 );
-		link.maxWidth = Math.min( Camera.main.width, 120 );
+		link.maxWidth(Math.min( Camera.main.width, 120 ));
 		
 		link.hardlight( Window.TITLE_COLOR );
 		add( link );

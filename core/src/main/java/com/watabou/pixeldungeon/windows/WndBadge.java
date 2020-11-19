@@ -37,14 +37,12 @@ public class WndBadge extends Window {
 
         Image icon = BadgeBanner.image( badge.image );
         icon.scale.set( 2 );
-        icon.brightness(0.4f);
         add( icon );
 
         BitmapTextMultiline info = PixelScene.createMultiline( badge.description, 8 );
         info.maxWidth(WIDTH - MARGIN * 2);
         info.align(BitmapTextMultiline.CENTER_ALIGN);
         PixelScene.align(info);
-        info.hardlight( 0x888888 );
         add(info);
 
         float w = Math.max( icon.width(), info.width() ) + MARGIN * 2;

@@ -32,7 +32,7 @@ import net.whitegem.pixeldungeon.LanguageFactory;
 
 public class BitmapText extends Component {
 
-	public int maxWidth = Integer.MAX_VALUE;
+	private int maxWidth = Integer.MAX_VALUE;
 	public int nLines;
 
 	private static final RenderedText SPACE = new RenderedText();
@@ -72,18 +72,27 @@ public class BitmapText extends Component {
 			tokens = Game.platform.splitforTextBlock(LanguageFactory.getTranslation(text), multiline);
 			
 			build();
-		}
+		} else {
+            tokens = Game.platform.splitforTextBlock("", multiline);
+
+			build();
+        }
 	}
     
     public void text(String str1, String str2)
     {
         text = str1 + " " + LanguageFactory.getTranslation(str2);
-        if (LanguageFactory.getTranslation(str2) != null && !LanguageFactory.getTranslation(str2).equals("")) {
+        
+        if (text != null && !text.equals("")) {
 			
 			tokens = Game.platform.splitforTextBlock(text, multiline);
 			
 			build();
-		}
+		} else {
+            tokens = Game.platform.splitforTextBlock("", multiline);
+
+            build();
+        }
         
     }
 

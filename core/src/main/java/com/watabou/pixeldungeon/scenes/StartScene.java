@@ -204,7 +204,7 @@ public class StartScene extends PixelScene {
 		if (!(huntressUnlocked = Badges.isUnlocked( Badges.Badge.BOSS_SLAIN_3 ))) {
 		
 			BitmapTextMultiline text = PixelScene.createMultiline( TXT_UNLOCK, 9 );
-			text.maxWidth = (int)width;
+			text.maxWidth((int)width);
 			
 			
 //			float pos = (bottom - BUTTON_HEIGHT) + (BUTTON_HEIGHT - text.height()) / 2;
@@ -342,7 +342,7 @@ public class StartScene extends PixelScene {
                 if (secondary.text() != null && secondary.text().length() > 0) {
 				text.setPosY(align( y + (height - text.height() - secondary.baseLine()) / 2 ));
 				
-				secondary.setPos(align( x + (width - secondary.width()) / 2 ), align( text.getY() + text.height() )); 
+				secondary.setPos(align( x + (width - secondary.width()) / 2 ), align( text.getY() + text.height() + 2 )); 
 			} else {
 				text.setPosY( align( y + (height - text.baseLine()) / 2 ));
 			}
