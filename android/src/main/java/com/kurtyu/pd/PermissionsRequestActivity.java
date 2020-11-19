@@ -11,7 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import static android.provider.Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS;
 
@@ -75,8 +74,8 @@ public class PermissionsRequestActivity extends AppCompatActivity implements Act
     private void requestPermissionsDialog()
     {
         new AlertDialog.Builder(this)
-                .setMessage("本遊戲必須允許儲存遊戲檔案才能夠進行遊戲，請再確認一次。")
-                .setTitle("儲存授權")
+                .setMessage("本游戏需要获取存储权限才能正常运行┐(´-｀)┌")
+                .setTitle("给👴授权")
                 .setIconAttribute(android.R.attr.alertDialogIcon)
                 .setCancelable(false) // 不能允許點旁邊取消
                 .setPositiveButton(android.R.string.ok,

@@ -80,7 +80,7 @@ public class BitmapText extends Component {
         text = str1 + " " + LanguageFactory.getTranslation(str2);
         if (LanguageFactory.getTranslation(str2) != null && !LanguageFactory.getTranslation(str2).equals("")) {
 			
-			tokens = Game.platform.splitforTextBlock(LanguageFactory.getTranslation(str2), multiline);
+			tokens = Game.platform.splitforTextBlock(text, multiline);
 			
 			build();
 		}
