@@ -117,6 +117,15 @@ public class BitmapText extends Component {
 	public int maxWidth(){
 		return maxWidth;
 	}
+	
+	public void size(int size){
+	    this.size = size;
+		text(text);
+	}
+	
+	public int size(){
+	    return size;
+	}
 
 	private synchronized void build(){
 		if (tokens == null) return;

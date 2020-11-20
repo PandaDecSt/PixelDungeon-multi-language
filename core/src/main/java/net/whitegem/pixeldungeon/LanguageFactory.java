@@ -24,7 +24,7 @@ public class LanguageFactory
 
     private LanguageFactory()
     {
-        language = "cht";
+        language = "zh";
         translator = new Translator(language);
     }
 
@@ -67,6 +67,7 @@ public class LanguageFactory
     public void setLanguage(String lang)
     {
         language = lang;
+        translator = new Translator(language);
     }
 
     public String translate(String originalText)

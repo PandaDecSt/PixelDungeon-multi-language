@@ -34,6 +34,7 @@ import com.watabou.utils.PlatformSupport;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import com.watabou.utils.PlatformSupport.TextCallback;
+import com.watabou.pixeldungeon.PixelDungeon;
 
 public class AndroidPlatformSupport extends PlatformSupport {
 
@@ -121,18 +122,21 @@ public class AndroidPlatformSupport extends PlatformSupport {
        // if (systemfont){
 		if (Gdx.files.absolute("/system/fonts/NotoSansCJK-Regular.ttc").exists()) {
 			//typefaces are 0-JP, 1-KR, 2-SC, 3-TC.
-			int typeFace = 2;
-//			switch (SPDSettings.language()) {
-//				case JAPANESE:
-//					typeFace = 0;
-//					break;
-//				case KOREAN:
-//					typeFace = 1;
-//					break;
-//				case CHINESE:
-//				default:
-//					typeFace = 2;
-//			}
+			int typeFace;
+			switch (PixelDungeon.language()) {
+				case "ja":
+					typeFace = 0;
+					break;
+				case "ko":
+					typeFace = 1;
+					break;
+				case "zh":
+					typeFace = 2;
+                    break;
+                case "tc":
+                default:
+                    typeFace = 3;
+			}
 			KRFontGenerator = SCFontGenerator = JPFontGenerator = new FreeTypeFontGenerator(Gdx.files.absolute("/system/fonts/NotoSansCJK-Regular.ttc"), typeFace);
 			
 		//otherwise we have to go over a few possibilities.

@@ -36,6 +36,7 @@ import com.watabou.pixeldungeon.ui.ExitButton;
 import com.watabou.pixeldungeon.ui.Icons;
 import com.watabou.pixeldungeon.ui.PrefsButton;
 import com.watabou.pixeldungeon.ui.SimpleButton;
+import com.watabou.pixeldungeon.ui.LangButton;
 
 public class TitleScene extends PixelScene
 {
@@ -129,6 +130,10 @@ public class TitleScene extends PixelScene
         PrefsButton btnPrefs = new PrefsButton();
         btnPrefs.setPos(0, 0);
         add(btnPrefs);
+        
+        LangButton btnLang = new LangButton();
+        btnLang.setPos(btnPrefs.width() + 4, 0);
+        add(btnLang);
 
         ExitButton btnExit = new ExitButton();
         btnExit.setPos(w - btnExit.width(), 0);

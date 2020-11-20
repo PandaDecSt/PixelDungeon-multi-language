@@ -236,6 +236,16 @@ public class PixelDungeon extends Game
     {
         return Preferences.INSTANCE.getBoolean(Preferences.KEY_BRIGHTNESS, false);
     }
+    
+    public static void language(String value)
+    {
+        Preferences.INSTANCE.put(Preferences.KEY_LANGUAHE, value);
+    }
+
+    public static String language()
+    {
+        return Preferences.INSTANCE.getString(Preferences.KEY_LANGUAHE, "");
+    }
 
     public static void donated(String value)
     {

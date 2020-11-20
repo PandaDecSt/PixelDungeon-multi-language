@@ -26,6 +26,8 @@ import com.watabou.pixeldungeon.ui.CheckBox;
 import com.watabou.pixeldungeon.ui.RedButton;
 import com.watabou.pixeldungeon.ui.Toolbar;
 import com.watabou.pixeldungeon.ui.Window;
+import com.watabou.pixeldungeon.scenes.GameScene;
+import net.whitegem.pixeldungeon.LanguageUtil;
 
 public class WndSettings extends Window {
 	
@@ -122,6 +124,8 @@ public class WndSettings extends Window {
 		btnSound.setRect( 0, btnMusic.bottom() + GAP, WIDTH, BTN_HEIGHT );
 		btnSound.checked( PixelDungeon.soundFx() );
 		add( btnSound );
+        
+        
 		
 		if (inGame) {
 			
@@ -148,6 +152,27 @@ public class WndSettings extends Window {
 			add( btnQuickslot );
 			
 			resize( WIDTH, (int)btnQuickslot.bottom() );
+            
+            RedButton btnLangs = new RedButton("语言"){
+                @Override
+                protected void onClick() {
+                    hide();
+                    GameScene.show(
+                        new WndSelectLanguage(LanguageUtil.langtext) {
+
+                            @Override
+                            protected void onSelect(int index) {
+                                PixelDungeon.language(LanguageUtil.lang[index]);
+                            }
+                        }
+                    );
+                }
+            };
+
+            btnLangs.setRect( 0, btnQuickslot.bottom() + GAP, WIDTH, BTN_HEIGHT );
+            add( btnLangs );
+
+            resize( WIDTH, (int)btnLangs.bottom() );
 			
 		} else {
 			
@@ -163,6 +188,7 @@ public class WndSettings extends Window {
 			resize( WIDTH, (int)btnOrientation.bottom() );
 			
 		}
+        
 	}
 	
 	private void zoom( float value ) {

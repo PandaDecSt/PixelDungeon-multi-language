@@ -46,7 +46,7 @@ public class RedButton extends Button {
 		bg = Chrome.get( Chrome.Type.BUTTON );
 		add( bg );
 		
-		text = PixelScene.createText( 9 );
+		text = PixelScene.createText( 8 );
 		add( text );
 	}
 	
@@ -96,6 +96,10 @@ public class RedButton extends Button {
 	public void enable( boolean value ) {
 		active = value;
 		text.alpha( value ? 1.0f : 0.3f );
+	}
+	
+	public void size(int size) {
+	    text.size(size);
 	}
 	
 	public void text( String value ) {
