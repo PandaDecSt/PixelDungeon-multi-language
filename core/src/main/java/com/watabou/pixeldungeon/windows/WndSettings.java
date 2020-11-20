@@ -28,6 +28,7 @@ import com.watabou.pixeldungeon.ui.Toolbar;
 import com.watabou.pixeldungeon.ui.Window;
 import com.watabou.pixeldungeon.scenes.GameScene;
 import net.whitegem.pixeldungeon.LanguageUtil;
+import com.watabou.noosa.Game;
 
 public class WndSettings extends Window {
 	
@@ -163,6 +164,9 @@ public class WndSettings extends Window {
                             @Override
                             protected void onSelect(int index) {
                                 PixelDungeon.language(LanguageUtil.lang[index]);
+                                LanguageUtil.setLanguage();
+                                Game.platform.resetGenerators();
+                                Game.resetScene();
                             }
                         }
                     );

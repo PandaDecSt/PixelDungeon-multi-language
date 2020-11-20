@@ -28,15 +28,15 @@ public class WndSelectLanguage extends Window {
 
 		int WIDTH = 120;
         
-        int GAP = 4;
+        int GAP = 2;
         
         int BUTTON_HEIGHT = 20;
 
-		int maxW = WIDTH - GAP * 2;
+		int BUTTON_SIZE = PixelDungeon.landscape() ? 4 : 6;
 
 		float pos = GAP;
 
-		final int columns = PixelDungeon.landscape() ? 3 : 2;
+		final int columns = PixelDungeon.landscape() ? 4 : 3;
 
 		int BUTTON_WIDTH = WIDTH / columns - GAP;
 
@@ -58,6 +58,7 @@ public class WndSelectLanguage extends Window {
 				};
 
 				btn.setRect(GAP + j * (BUTTON_WIDTH + GAP), pos, BUTTON_WIDTH, BUTTON_HEIGHT);
+                btn.btnsize(BUTTON_SIZE);
 				add(btn);
 
 				lastButtonBottom = (int) btn.bottom();

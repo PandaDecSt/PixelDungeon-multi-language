@@ -244,7 +244,7 @@ public class PixelDungeon extends Game
 
     public static String language()
     {
-        return Preferences.INSTANCE.getString(Preferences.KEY_LANGUAHE, "");
+        return Preferences.INSTANCE.getString(Preferences.KEY_LANGUAHE, "zh");
     }
 
     public static void donated(String value)

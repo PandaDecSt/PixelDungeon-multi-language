@@ -28,18 +28,9 @@ public class LanguageUtil {
         }
     }
     
-    private static void getCode() {
-        boolean e = false;
-        code = "zh";
-        for (int i = 0; i < lang.length; i++) {
-            if (PixelDungeon.language() != lang[i]) {
-                e = true;          
-            }
-            if (!e) {
-                code = PixelDungeon.language();
-            }
-        }
-        Gdx.app.log("langsetting", PixelDungeon.language());
+    private static void getCode() { 
+        code = PixelDungeon.language();
+        Gdx.app.log("langsetting", code);
     }
     
     public static void setLanguage() {

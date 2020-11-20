@@ -98,8 +98,8 @@ public class RedButton extends Button {
 		text.alpha( value ? 1.0f : 0.3f );
 	}
 	
-	public void size(int size) {
-	    text.size(size);
+	public void btnsize(int size) {
+	    text = PixelScene.createText( size );
 	}
 	
 	public void text( String value ) {

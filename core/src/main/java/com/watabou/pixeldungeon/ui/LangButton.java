@@ -26,6 +26,7 @@ import com.watabou.pixeldungeon.windows.WndSettings;
 import com.watabou.pixeldungeon.windows.WndSelectLanguage;
 import com.watabou.pixeldungeon.PixelDungeon;
 import net.whitegem.pixeldungeon.LanguageUtil;
+import com.watabou.noosa.Game;
 
 public class LangButton extends Button {
 	
@@ -42,7 +43,7 @@ public class LangButton extends Button {
 	protected void createChildren() {
 		super.createChildren();
 		
-		image = Icons.MAGE.get();
+		image = Icons.BOOK.get();
 		add( image );
 	}
 	
@@ -73,6 +74,9 @@ public class LangButton extends Button {
                 @Override
                 protected void onSelect(int index) {               
                     PixelDungeon.language(LanguageUtil.lang[index]);
+                    LanguageUtil.setLanguage();
+//                    Game.platform.resetGenerators();
+//                    Game.resetScene();
                 }
             } );
 	}

@@ -27,6 +27,7 @@ public enum Icons {
 	BUSY,
 	COMPASS, 
 	PREFS,
+    BOOK,
 	WARNING,
 	TARGET,
 	WATA,
@@ -71,6 +72,9 @@ public enum Icons {
 		case PREFS:
 			icon.frame( icon.texture.uvRect( 30, 0, 46, 16 ) );
 			break;
+            case BOOK:
+                icon.frame( icon.texture.uvRect( 16, 13, 30, 30 ) );
+                break;
 		case WARNING:
 			icon.frame( icon.texture.uvRect( 46, 0, 58, 12 ) );
 			break;

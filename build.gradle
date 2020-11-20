@@ -16,7 +16,7 @@ allprojects {
 
     version = '1.0'
     ext {
-        appName = "XYPD"
+        appName = "PD-ML"
         gdxVersion = '1.9.10'
         gdxPayVersion = "0.10.3"
         roboVMVersion = '2.3.0'
