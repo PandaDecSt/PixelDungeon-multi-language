@@ -20,34 +20,37 @@ public class Translator {
         this.language = language;
         translation = new HashMap<>();
         // THIS FILE MUST BE UTF8 WITHOUT BOM
-        if (!language.equals("en")) {
-            FileHandle file = Gdx.files.internal("translation/" + language + ".txt");
-            BufferedReader reader = new BufferedReader(file.reader("UTF8"));
-            ArrayList<String> lines = new ArrayList<>();
-            try {
-                String line = reader.readLine();
-                while (line != null) {
-                    // 過濾掉註解#
-                    if (!line.trim().equals("") && !line.trim().startsWith("#")) {
-                        lines.add(line.trim());
+        if (!language.equals("en")) {     
+            FileHandle file;
+            if (Gdx.files.internal("translation/" + language + ".txt").exists()) {
+                file = Gdx.files.internal("translation/" + language + ".txt");
+            } else {file = Gdx.files.internal("translation/" + "null" + ".txt");}
+                BufferedReader reader = new BufferedReader(file.reader("UTF8"));
+                ArrayList<String> lines = new ArrayList<>();
+                try {
+                    String line = reader.readLine();
+                    while (line != null) {
+                        // 過濾掉註解#
+                        if (!line.trim().equals("") && !line.trim().startsWith("#")) {
+                            lines.add(line.trim());
+                        }
+                        line = reader.readLine();
                     }
-                    line = reader.readLine();
+                    reader.close();
+                } catch (IOException ioe) {
                 }
-                reader.close();
-            } catch (IOException ioe) {
-            }
 
-            // 檢查：翻譯ㄧ定要成對出現
-            if (lines.size() % 2 != 0) {
-                Gdx.app.log("Translator", "ERROR READING FILE" + " translation/" + language + ".txt", new Exception("Lines of original texts and translated texts in the translation file do not match."));
-            }
+                // 檢查：翻譯ㄧ定要成對出現
+                if (lines.size() % 2 != 0) {
+                    Gdx.app.log("Translator", "ERROR READING FILE" + " translation/" + language + ".txt", new Exception("Lines of original texts and translated texts in the translation file do not match."));
+                }
 
-            for (int i = 0; i < lines.size(); i += 2) {
-                String trans = lines.get(i + 1);
-                Gdx.app.log("Translator", lines.get(i).toLowerCase() + " => 加入翻譯 => " + trans + "\n");
-                translation.put(lines.get(i).toLowerCase(), trans);
+                for (int i = 0; i < lines.size(); i += 2) {
+                    String trans = lines.get(i + 1);
+                    Gdx.app.log("Translator", lines.get(i).toLowerCase() + " => 加入翻譯 => " + trans + "\n");
+                    translation.put(lines.get(i).toLowerCase(), trans);
+                }
             }
-        }
     }
 
     private static boolean isChinese(char c) {

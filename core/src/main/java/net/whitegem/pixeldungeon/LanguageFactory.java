@@ -3,6 +3,7 @@ package net.whitegem.pixeldungeon;
 import com.badlogic.gdx.Gdx;
 import com.watabou.pixeldungeon.sprites.CharSprite;
 import com.watabou.pixeldungeon.utils.GLog;
+import com.watabou.pixeldungeon.PixelDungeon;
 
 /**
  * Created by Carl-Station on 01/22/15.
@@ -24,7 +25,7 @@ public class LanguageFactory
 
     private LanguageFactory()
     {
-        language = "zh";
+        language = PixelDungeon.language();
         translator = new Translator(language);
     }
 
@@ -60,6 +61,8 @@ public class LanguageFactory
         } else if (text == null)
         {
             return null;
+        } else {
+            return text;
         }
         return text;
     }

@@ -96,7 +96,7 @@ public class Plant implements Bundlable {
 		
 		public static final String AC_PLANT	= "PLANT";
 		
-		private static final String TXT_INFO = "將種子扔在你希望%s生長的地方.\n\n%s";
+		private static final String TXT_INFO = "Throw this seed to the place where you want to grow %s.\n\n%s";
 		
 		private static final float TIME_TO_PLANT = 1f;
 		

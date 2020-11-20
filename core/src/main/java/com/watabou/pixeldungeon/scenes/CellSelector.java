@@ -117,7 +117,7 @@ public class CellSelector extends TouchArea {
 	@Override
 	protected void onDrag( NoosaInputProcessor.Touch t ) {
 		 
-		//camera.followTarget = null;
+		camera.panFollow(null,0);
 
 		if (pinching) {
 

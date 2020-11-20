@@ -42,7 +42,7 @@ public class DewVial extends Item {
 	private static final float TIME_TO_DRINK = 1f;
 	
 	private static final String TXT_VALUE	= "%+dHP";
-	private static final String TXT_STATUS	= "%d分之%d";
+	private static final String TXT_STATUS	= "%d/%d";
 	
 	private static final String TXT_AUTO_DRINK	= "The dew vial was emptied to heal your wounds.";
 	private static final String TXT_COLLECTED	= "You collected a dewdrop into your dew vial.";
@@ -171,7 +171,7 @@ public class DewVial extends Item {
 	
 	@Override
 	public String status() {
-		return Utils.format( TXT_STATUS, MAX_VOLUME, volume );
+        return Utils.format( TXT_STATUS, volume, MAX_VOLUME );
 	}
 	
 	@Override

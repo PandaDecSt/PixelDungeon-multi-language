@@ -17,8 +17,8 @@ import com.watabou.pixeldungeon.PixelDungeon;
  */
 public class LanguageUtil {
     private static String code = "en";
-    public static String lang[] = {"en", "ru", "fr", "pl", "es", "ko", "pt_BR", "it", "de", "zh", "ja", "tr", "uk","ms"/*"hu"*/};
-    public static String langtext[] = {"English", "Русский", "Français", "Polski", "Español", "한국말", "Português brasileiro", "Italiano", "Deutsch", "简体中文", "日本語", "Türkçe", "Украї́нська","Bahasa Melayu"/*"Magyar Nyelv"*/};
+    public static String lang[] = {"en", "ru", "fr", "pl", "es", "ko", "pt", "it", "de", "tc", "zh", "ja", "tr", "uk", "hu"};
+    public static String langtext[] = {"English", "Русский", "Français", "Polski", "Español", "한국말", "Português", "Italiano", "Deutsch","繁體中文", "简体中文", "日本語", "Türkçe", "Украї́нська", "Magyar"};
     private static class FontSettings {
         protected float baseline = -1;
         protected int scale = -1;

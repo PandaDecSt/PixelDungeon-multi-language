@@ -2754,7 +2754,7 @@
  There are old blood stains on the floor.
  地板上有一滩陈旧的血迹.
  Murky water
- 泥浆
+ 污水
  Wet yellowish moss covers the floor.
  地板上覆盖着淡黄色的潮湿苔藓.
  The trap emits a piercing sound that echoes throughout the dungeon!
